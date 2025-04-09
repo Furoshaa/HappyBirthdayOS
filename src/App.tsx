@@ -385,7 +385,7 @@ function App() {
               </div>
             </div>
             <div className="window-body">
-              <p>Would you like to have the best birthday ever?</p>
+              <p>Are you ready for some birthday magic?</p>
               <div className="button-container">
                 <button onClick={handleYesClick}>Yes</button>
                 <button onClick={handleNoClick}>No</button>
@@ -405,7 +405,7 @@ function App() {
               </div>
             </div>
             <div className="window-body">
-              <p>Are you ready for some birthday magic?</p>
+              <p>Do you love me as much as I love you?</p>
               <div className="button-container">
                 <button onClick={handleYesClick}>Of course!</button>
                 <button onClick={handleNoClick}>Not yet</button>
@@ -447,8 +447,8 @@ function App() {
             <div className="window-body celebration-body">
               <h1 className="celebration-text">Happy Birthday Baby!!!</h1>
               <div className="celebration-message">
-                <p>Wishing you the most amazing day filled with</p>
-                <p>joy, laughter and lots of love! ❤️</p>
+                <p>I wish you a happy birthday! May your life</p>
+                <p>be filled with joy, success, and lots of love! ❤️</p>
               </div>
               <div className="button-container">
                 <button onClick={closeWindow}>Close</button>
@@ -596,7 +596,7 @@ function App() {
               </div>
               <div className="window-body special-message-body">
                 <h2 className="love-text">I Love You!</h2>
-                <p className="love-subtext">You're as beautiful as a floppy disk and twice as precious! 💾</p>
+                <p className="love-subtext">I hope you like this cute little birthday website I made for you! 💖</p>
                 
                 {/* Animated hearts container */}
                 <div className="hearts-container">
