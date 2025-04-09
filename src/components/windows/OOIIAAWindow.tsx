@@ -21,6 +21,7 @@ const OOIIAAWindow: React.FC<OOIIAAWindowProps> = ({
   focusWindow
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [showControls, setShowControls] = React.useState(false);
 
   // Play video when component mounts
   React.useEffect(() => {
@@ -29,6 +30,8 @@ const OOIIAAWindow: React.FC<OOIIAAWindowProps> = ({
         console.error("Video playback failed:", error);
       });
     }
+    
+    setShowControls(false)
   }, []);
 
   return (
@@ -58,11 +61,15 @@ const OOIIAAWindow: React.FC<OOIIAAWindowProps> = ({
       <div className="window-body ooiiaa-body">
         <video 
           ref={videoRef}
-          controls
+          controls={showControls}
           autoPlay
+          loop
           playsInline
           width="100%"
           className="ooiiaa-video"
+          disablePictureInPicture
+          controlsList="nodownload"
+          onClick={() => setShowControls(true)} // Show controls on click
         >
           <source src={catVideo} type="video/mp4" />
           Your browser does not support the video tag.
@@ -72,4 +79,4 @@ const OOIIAAWindow: React.FC<OOIIAAWindowProps> = ({
   );
 };
 
-export default OOIIAAWindow; 
+export default OOIIAAWindow;
