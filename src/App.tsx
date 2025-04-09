@@ -120,10 +120,8 @@ function App() {
   // Window control functions
   const closeBirthdayWindow = () => {
     setShowing(false);
-    // Reset step to remove celebration effects
-    if (step === 3) {
-      setStep(0);
-    }
+    // Always reset step to 0 when closing the window, regardless of current step
+    setStep(0);
     if (activeWindow === 'birthday') {
       setActiveWindow(showingMyComputer ? 'myComputer' : (showingExtra ? 'special' : null));
     }
