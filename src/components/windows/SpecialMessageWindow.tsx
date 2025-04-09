@@ -45,15 +45,15 @@ const SpecialMessageWindow: React.FC<SpecialMessageWindowProps> = ({
         
         {/* Animated hearts container */}
         <div className="hearts-container">
-          {[...Array(isMobile ? 8 : 15)].map((_, i) => (
+          {[...Array(isMobile ? 25 : 50)].map((_, i) => (
             <div 
               key={i} 
               className="floating-heart" 
               style={{
                 left: `${Math.random() * 100}%`,
-                animationDuration: `${3 + Math.random() * 7}s`,
-                animationDelay: `${Math.random() * 5}s`,
-                fontSize: `${12 + Math.random() * 20}px`
+                animationDuration: `${2 + Math.random() * 6}s`,
+                animationDelay: `${Math.random() * 4}s`,
+                fontSize: `${12 + Math.random() * 24}px`
               }}
             >
               ❤️
