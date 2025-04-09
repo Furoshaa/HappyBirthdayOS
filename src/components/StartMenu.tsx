@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface StartMenuProps {
   isOpen: boolean;
@@ -17,6 +17,25 @@ const StartMenu: React.FC<StartMenuProps> = ({
   handleShutdown,
   closeStartMenu
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Check on initial load
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+  
   if (!isOpen) return null;
   
   const handleItemClick = (action: () => void) => {
@@ -25,7 +44,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
   };
   
   return (
-    <div className="start-menu">
+    <div className={`start-menu ${isMobile ? 'start-menu-mobile' : ''}`}>
       <div className="start-menu-sidebar">
         <span>HappyBirthday<span className="win95">OS</span></span>
       </div>
