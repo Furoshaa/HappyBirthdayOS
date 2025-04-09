@@ -36,7 +36,7 @@ const Desktop: React.FC<DesktopProps> = ({
         label="HAPPY BIRTHDAY .EXE" 
         onClick={handleBirthdayIconClick}
         style={{
-          top: isMobile ? '90px' : '120px',
+          top: isMobile ? '110px' : '120px',
           left: isMobile ? '10px' : '20px'
         }}
       />
@@ -46,7 +46,7 @@ const Desktop: React.FC<DesktopProps> = ({
         label="SPECIAL MESSAGE .EXE" 
         onClick={handleSpecialMessageClick}
         style={{
-          top: isMobile ? '160px' : '220px',
+          top: isMobile ? '210px' : '220px',
           left: isMobile ? '10px' : '20px'
         }}
       />

@@ -22,10 +22,12 @@ const SpecialMessageWindow: React.FC<SpecialMessageWindowProps> = ({
       ref={windowRef}
       className="window special-window"
       style={{ 
-        top: isMobile ? '60px' : '30%', 
-        left: isMobile ? '5%' : '60%', 
+        top: isMobile ? '60%' : '30%', 
+        left: isMobile ? '50%' : '60%', 
         width: isMobile ? '90%' : '400px', 
-        height: isMobile ? 'auto' : '300px',
+        height: '300px',
+        minWidth: isMobile ? '300px' : '400px',
+        maxWidth: isMobile ? '90%' : '400px',
         zIndex: zIndex 
       }}
     >

@@ -235,9 +235,17 @@ function App() {
       }
       
       if (windowElement) {
+        // Store original width before modifying position
+        const originalWidth = windowElement.style.width;
+        
         windowElement.style.left = `${e.clientX - dragOffset.x}px`;
         windowElement.style.top = `${e.clientY - dragOffset.y}px`;
         windowElement.style.transform = 'none'; // Remove default centering
+        
+        // Ensure width is preserved
+        if (originalWidth) {
+          windowElement.style.width = originalWidth;
+        }
       }
     }
   };
@@ -321,9 +329,17 @@ function App() {
       }
       
       if (windowElement) {
+        // Store original width before modifying position
+        const originalWidth = windowElement.style.width;
+        
         windowElement.style.left = `${e.touches[0].clientX - dragOffset.x}px`;
         windowElement.style.top = `${e.touches[0].clientY - dragOffset.y}px`;
         windowElement.style.transform = 'none'; // Remove default centering
+        
+        // Ensure width is preserved
+        if (originalWidth) {
+          windowElement.style.width = originalWidth;
+        }
       }
     }
   };
@@ -372,9 +388,17 @@ function App() {
         }
         
         if (windowElement) {
+          // Store original width before modifying position
+          const originalWidth = windowElement.style.width;
+          
           windowElement.style.left = `${e.clientX - dragOffset.x}px`;
           windowElement.style.top = `${e.clientY - dragOffset.y}px`;
           windowElement.style.transform = 'none'; // Remove default centering
+          
+          // Ensure width is preserved
+          if (originalWidth) {
+            windowElement.style.width = originalWidth;
+          }
         }
       }
     };
@@ -431,9 +455,17 @@ function App() {
         }
         
         if (windowElement) {
+          // Store original width before modifying position
+          const originalWidth = windowElement.style.width;
+          
           windowElement.style.left = `${e.touches[0].clientX - dragOffset.x}px`;
           windowElement.style.top = `${e.touches[0].clientY - dragOffset.y}px`;
           windowElement.style.transform = 'none'; // Remove default centering
+          
+          // Ensure width is preserved
+          if (originalWidth) {
+            windowElement.style.width = originalWidth;
+          }
         }
       }
     };
