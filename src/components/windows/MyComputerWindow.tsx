@@ -26,10 +26,12 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
       ref={windowRef}
       className="window my-computer-window"
       style={{ 
-        top: isMobile ? '60px' : '20%', 
-        left: isMobile ? '5%' : '30%', 
-        width: isMobile ? '90%' : '400px', 
-        height: isMobile ? '60vh' : '300px',
+        top: isMobile ? '45%' : '20%', 
+        left: isMobile ? '50%' : '30%', 
+        width: isMobile ? '70%' : '480px', 
+        height: isMobile ? '40%' : '350px',
+        minWidth: isMobile ? '70%' : '480px',
+        maxWidth: isMobile ? '70%' : '480px',
         zIndex: zIndex 
       }}
     >
@@ -69,7 +71,7 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
           </div>
         </div>
         <div className="status-bar">
-          <div>4 object(s)</div>
+          <div>3 object(s)</div>
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ import ShutdownScreen from './components/ShutdownScreen';
 
 function App() {
   const [step, setStep] = useState<number>(0);
-  const [showing, setShowing] = useState<boolean>(true);
+  const [showing, setShowing] = useState<boolean>(false);
   const [showingExtra, setShowingExtra] = useState<boolean>(false);
   const [showingMyComputer, setShowingMyComputer] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<string>('');
@@ -24,7 +24,7 @@ function App() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   
   // Window management state
-  const [activeWindow, setActiveWindow] = useState<string | null>('birthday');
+  const [activeWindow, setActiveWindow] = useState<string | null>(null);
   const [windowZIndex, setWindowZIndex] = useState({ birthday: 10, myComputer: 5, special: 5 });
   
   // Track open windows for taskbar
@@ -235,16 +235,24 @@ function App() {
       }
       
       if (windowElement) {
-        // Store original width before modifying position
+        // Store original width and other properties before modifying position
         const originalWidth = windowElement.style.width;
+        const originalMinWidth = windowElement.style.minWidth;
+        const originalMaxWidth = windowElement.style.maxWidth;
         
         windowElement.style.left = `${e.clientX - dragOffset.x}px`;
         windowElement.style.top = `${e.clientY - dragOffset.y}px`;
         windowElement.style.transform = 'none'; // Remove default centering
         
-        // Ensure width is preserved
+        // Ensure width and related properties are preserved
         if (originalWidth) {
           windowElement.style.width = originalWidth;
+        }
+        if (originalMinWidth) {
+          windowElement.style.minWidth = originalMinWidth;
+        }
+        if (originalMaxWidth) {
+          windowElement.style.maxWidth = originalMaxWidth;
         }
       }
     }

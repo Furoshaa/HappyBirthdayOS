@@ -97,15 +97,21 @@ button {
 }
 
 .celebration-text {
-  font-size: 24px;
+  font-size: 32px;
   margin: 10px 0;
   color: #ff1493;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   animation: pulse 1.5s infinite;
 }
 
+@media screen and (min-width: 769px) {
+  .celebration-text {
+    font-size: 32px;
+  }
+}
+
 .celebration-message {
-  font-size: 16px;
+  font-size: 25px;
   margin: 15px 0;
   line-height: 1.4;
 }
@@ -366,7 +372,7 @@ button {
 
 /* My Computer Window */
 .my-computer-window {
-  min-width: 400px;
+  min-width: initial;
   min-height: 300px;
 }
 
@@ -424,7 +430,7 @@ button {
   background-color: #fff8f8;
   padding: 20px;
   height: calc(100% - 30px); /* Reduce height to prevent overflow at bottom */
-  max-height: 260px; /* Set a max height to ensure it stays within window */
+  max-height: 360px; /* Set a max height to ensure it stays within window */
   overflow: hidden; /* Allow content to overflow */
 }
 
@@ -432,7 +438,7 @@ button {
   color: #ff1493;
   text-align: center;
   margin-top: 10px;
-  font-size: 24px;
+  font-size: 34px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   animation: pulse 1.5s infinite;
   z-index: 2;
@@ -444,6 +450,17 @@ button {
   margin: 15px 0;
   z-index: 2;
   position: relative;
+  font-size: 20px;
+}
+
+@media screen and (min-width: 769px) {
+  .love-text {
+    font-size: 45px;
+  }
+  
+  .love-subtext {
+    font-size: 25px;
+  }
 }
 
 .hearts-container {
@@ -488,4 +505,17 @@ button {
     height: 14px !important;
     margin-right: 2px !important;
   }
+
+  .celebration-text {
+    font-size: 24px;
+  }
+
+  .celebration-message {
+    font-size: 15px;
+  }
+
+  .special-message-body {
+    max-height: 255px; /* Set a max height to ensure it stays within window */
+  }
+
 }
