@@ -4,6 +4,7 @@ interface MyComputerWindowProps {
   closeWindow: () => void;
   handleBirthdayIconClick: () => void;
   handleSpecialMessageClick: () => void;
+  handleOOIIAAClick: () => void;
   windowRef: React.RefObject<HTMLDivElement | null>;
   zIndex: number;
   handleMouseDown: (e: React.MouseEvent, windowName: string) => void;
@@ -16,6 +17,7 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
   closeWindow,
   handleBirthdayIconClick,
   handleSpecialMessageClick,
+  handleOOIIAAClick,
   windowRef,
   zIndex,
   handleMouseDown,
@@ -62,7 +64,7 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
               src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
               alt="Birthday" 
             />
-            <div>HAPPY BIRTHDAY .EXE</div>
+            <div>HappyBirthday.exe</div>
           </div>
           
           <div className="explorer-item" onClick={handleSpecialMessageClick}>
@@ -70,7 +72,14 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
               src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
               alt="Special Message" 
             />
-            <div>SPECIAL MESSAGE .EXE</div>
+            <div>Cute_message.exe</div>
+          </div>
+          <div className="explorer-item" onClick={handleOOIIAAClick}>
+            <img 
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
+              alt="OOIIAA Video" 
+            />
+            <div>ooiiaa.mp4</div>
           </div>
         </div>
         <div className="status-bar">

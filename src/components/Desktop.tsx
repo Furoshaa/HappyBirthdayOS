@@ -2,56 +2,61 @@ import React from 'react';
 import DesktopIcon from './DesktopIcon';
 
 interface DesktopProps {
+  children: React.ReactNode;
   step: number;
   isMobile: boolean;
   handleMyComputerClick: () => void;
   handleBirthdayIconClick: () => void;
   handleSpecialMessageClick: () => void;
-  children: React.ReactNode;
+  handleOOIIAAClick: () => void;
 }
 
-const Desktop: React.FC<DesktopProps> = ({
-  step,
-  isMobile,
-  handleMyComputerClick,
+const Desktop: React.FC<DesktopProps> = ({ 
+  children, 
+  step, 
+  isMobile, 
+  handleMyComputerClick, 
   handleBirthdayIconClick,
   handleSpecialMessageClick,
-  children
+  handleOOIIAAClick
 }) => {
+  const getBackgroundClass = () => {
+    if (step === 3) {
+      return 'celebration-bg';
+    } else if (step >= 1) {
+      return 'cute-bg';
+    }
+    return '';
+  };
+  
   return (
-    <div className={`desktop ${step === 3 ? 'celebration-bg' : 'cute-bg'}`}>
+    <div className={`desktop ${getBackgroundClass()}`}>
       {/* Desktop Icons */}
       <DesktopIcon 
         icon="my-computer" 
         label="My Computer" 
-        onClick={handleMyComputerClick}
-        style={{
-          top: '20px',
-          left: isMobile ? '10px' : '20px'
-        }}
+        onClick={handleMyComputerClick} 
+        style={{ top: isMobile ? '10px' : '20px', left: isMobile ? '10px' : '20px' }}
       />
-      
       <DesktopIcon 
         icon="heart" 
-        label="HAPPY BIRTHDAY .EXE" 
-        onClick={handleBirthdayIconClick}
-        style={{
-          top: isMobile ? '110px' : '120px',
-          left: isMobile ? '10px' : '20px'
-        }}
+        label="Happy_Birthday.exe" 
+        onClick={handleBirthdayIconClick} 
+        style={{ top: isMobile ? '100px' : '120px', left: isMobile ? '10px' : '20px' }}
       />
-      
       <DesktopIcon 
         icon="heart" 
-        label="SPECIAL MESSAGE .EXE" 
-        onClick={handleSpecialMessageClick}
-        style={{
-          top: isMobile ? '210px' : '220px',
-          left: isMobile ? '10px' : '20px'
-        }}
+        label="Cute_message.exe" 
+        onClick={handleSpecialMessageClick} 
+        style={{ top: isMobile ? '190px' : '220px', left: isMobile ? '10px' : '20px' }}
+      />
+      <DesktopIcon 
+        icon="heart" 
+        label="ooiiaa.mp4" 
+        onClick={handleOOIIAAClick} 
+        style={{ top: isMobile ? '280px' : '320px', left: isMobile ? '10px' : '20px' }}
       />
       
-      {/* Render all children (windows, confetti, etc.) */}
       {children}
     </div>
   );

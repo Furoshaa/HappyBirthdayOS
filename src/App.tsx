@@ -10,6 +10,7 @@ import StartMenu from './components/StartMenu';
 import BirthdayWindow from './components/windows/BirthdayWindow';
 import MyComputerWindow from './components/windows/MyComputerWindow';
 import SpecialMessageWindow from './components/windows/SpecialMessageWindow';
+import OOIIAAWindow from './components/windows/OOIIAAWindow';
 import Confetti from './components/Confetti';
 import ShutdownScreen from './components/ShutdownScreen';
 
@@ -18,6 +19,7 @@ function App() {
   const [showing, setShowing] = useState<boolean>(false);
   const [showingExtra, setShowingExtra] = useState<boolean>(false);
   const [showingMyComputer, setShowingMyComputer] = useState<boolean>(false);
+  const [showingOOIIAA, setShowingOOIIAA] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<string>('');
   const [startMenuOpen, setStartMenuOpen] = useState<boolean>(false);
   const [shutdownActive, setShutdownActive] = useState<boolean>(false);
@@ -25,19 +27,26 @@ function App() {
   
   // Window management state
   const [activeWindow, setActiveWindow] = useState<string | null>(null);
-  const [windowZIndex, setWindowZIndex] = useState({ birthday: 10, myComputer: 5, special: 5 });
+  const [windowZIndex, setWindowZIndex] = useState({ 
+    birthday: 10, 
+    myComputer: 5, 
+    special: 5,
+    ooiiaa: 5
+  });
   
   // Track open windows for taskbar
   const openWindows = {
     birthday: showing,
     myComputer: showingMyComputer,
-    special: showingExtra
+    special: showingExtra,
+    ooiiaa: showingOOIIAA
   };
   
   // References for draggable windows
   const birthdayWindowRef = useRef<HTMLDivElement>(null);
   const myComputerWindowRef = useRef<HTMLDivElement>(null);
   const specialWindowRef = useRef<HTMLDivElement>(null);
+  const ooiiaaWindowRef = useRef<HTMLDivElement>(null);
   
   // State to track dragging
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -85,7 +94,7 @@ function App() {
     setActiveWindow(windowName);
     setWindowZIndex(prev => ({
       ...prev,
-      [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
+      [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special, prev.ooiiaa) + 1
     }));
   };
   
@@ -94,7 +103,7 @@ function App() {
     setActiveWindow(windowName);
     setWindowZIndex(prev => ({
       ...prev,
-      [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
+      [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special, prev.ooiiaa) + 1
     }));
   };
   
@@ -123,7 +132,7 @@ function App() {
     // Always reset step to 0 when closing the window, regardless of current step
     setStep(0);
     if (activeWindow === 'birthday') {
-      setActiveWindow(showingMyComputer ? 'myComputer' : (showingExtra ? 'special' : null));
+      setActiveWindow(showingMyComputer ? 'myComputer' : (showingExtra ? 'special' : (showingOOIIAA ? 'ooiiaa' : null)));
     }
   };
   
@@ -145,17 +154,30 @@ function App() {
     setActiveWindow('special');
   };
   
+  const handleOOIIAAClick = () => {
+    setShowingOOIIAA(true);
+    bringWindowToFront('ooiiaa');
+    setActiveWindow('ooiiaa');
+  };
+  
   const closeMyComputerWindow = () => {
     setShowingMyComputer(false);
     if (activeWindow === 'myComputer') {
-      setActiveWindow(showing ? 'birthday' : (showingExtra ? 'special' : null));
+      setActiveWindow(showing ? 'birthday' : (showingExtra ? 'special' : (showingOOIIAA ? 'ooiiaa' : null)));
     }
   };
   
   const closeExtraWindow = () => {
     setShowingExtra(false);
     if (activeWindow === 'special') {
-      setActiveWindow(showing ? 'birthday' : (showingMyComputer ? 'myComputer' : null));
+      setActiveWindow(showing ? 'birthday' : (showingMyComputer ? 'myComputer' : (showingOOIIAA ? 'ooiiaa' : null)));
+    }
+  };
+  
+  const closeOOIIAAWindow = () => {
+    setShowingOOIIAA(false);
+    if (activeWindow === 'ooiiaa') {
+      setActiveWindow(showing ? 'birthday' : (showingMyComputer ? 'myComputer' : (showingExtra ? 'special' : null)));
     }
   };
   
@@ -187,6 +209,7 @@ function App() {
       setShowing(true);
       setShowingExtra(false);
       setShowingMyComputer(false);
+      setShowingOOIIAA(false);
       setActiveWindow('birthday');
     }, 3000);
   };
@@ -210,6 +233,9 @@ function App() {
           break;
         case 'special':
           windowElement = specialWindowRef.current;
+          break;
+        case 'ooiiaa':
+          windowElement = ooiiaaWindowRef.current;
           break;
       }
       
@@ -239,6 +265,9 @@ function App() {
           break;
         case 'special':
           windowElement = specialWindowRef.current;
+          break;
+        case 'ooiiaa':
+          windowElement = ooiiaaWindowRef.current;
           break;
       }
       
@@ -280,6 +309,9 @@ function App() {
         case 'special':
           windowElement = specialWindowRef.current;
           break;
+        case 'ooiiaa':
+          windowElement = ooiiaaWindowRef.current;
+          break;
       }
       
       if (windowElement) {
@@ -311,6 +343,9 @@ function App() {
         case 'special':
           windowElement = specialWindowRef.current;
           break;
+        case 'ooiiaa':
+          windowElement = ooiiaaWindowRef.current;
+          break;
       }
       
       if (windowElement && e.touches[0]) {
@@ -341,6 +376,9 @@ function App() {
           break;
         case 'special':
           windowElement = specialWindowRef.current;
+          break;
+        case 'ooiiaa':
+          windowElement = ooiiaaWindowRef.current;
           break;
       }
       
@@ -374,6 +412,9 @@ function App() {
         case 'special':
           windowElement = specialWindowRef.current;
           break;
+        case 'ooiiaa':
+          windowElement = ooiiaaWindowRef.current;
+          break;
       }
       
       if (windowElement) {
@@ -400,6 +441,9 @@ function App() {
             break;
           case 'special':
             windowElement = specialWindowRef.current;
+            break;
+          case 'ooiiaa':
+            windowElement = ooiiaaWindowRef.current;
             break;
         }
         
@@ -432,6 +476,9 @@ function App() {
             break;
           case 'special':
             windowElement = specialWindowRef.current;
+            break;
+          case 'ooiiaa':
+            windowElement = ooiiaaWindowRef.current;
             break;
         }
         
@@ -467,6 +514,9 @@ function App() {
             break;
           case 'special':
             windowElement = specialWindowRef.current;
+            break;
+          case 'ooiiaa':
+            windowElement = ooiiaaWindowRef.current;
             break;
         }
         
@@ -516,6 +566,7 @@ function App() {
           handleMyComputerClick={handleMyComputerClick}
           handleBirthdayIconClick={handleBirthdayIconClick}
           handleSpecialMessageClick={handleSpecialMessageClick}
+          handleOOIIAAClick={handleOOIIAAClick}
         >
           {/* Main birthday dialog window */}
           {showing && (
@@ -539,6 +590,7 @@ function App() {
               closeWindow={closeMyComputerWindow}
               handleBirthdayIconClick={handleBirthdayIconClick}
               handleSpecialMessageClick={handleSpecialMessageClick}
+              handleOOIIAAClick={handleOOIIAAClick}
               windowRef={myComputerWindowRef}
               zIndex={windowZIndex.myComputer}
               handleMouseDown={handleMouseDown}
@@ -561,6 +613,19 @@ function App() {
             />
           )}
           
+          {/* OOIIAA video player window */}
+          {showingOOIIAA && (
+            <OOIIAAWindow
+              closeWindow={closeOOIIAAWindow}
+              windowRef={ooiiaaWindowRef}
+              zIndex={windowZIndex.ooiiaa}
+              handleMouseDown={handleMouseDown}
+              handleTouchStart={handleTouchStart}
+              isMobile={isMobile}
+              focusWindow={() => focusWindow('ooiiaa')}
+            />
+          )}
+          
           {/* Confetti */}
           {step === 3 && <Confetti isMobile={isMobile} />}
           
@@ -570,6 +635,7 @@ function App() {
             openMyComputer={handleMyComputerClick}
             openBirthdayWindow={handleBirthdayIconClick}
             openSpecialMessage={handleSpecialMessageClick}
+            openOOIIAA={handleOOIIAAClick}
             handleShutdown={handleShutdown}
             closeStartMenu={closeStartMenu}
           />

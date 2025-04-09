@@ -5,6 +5,7 @@ interface StartMenuProps {
   openMyComputer: () => void;
   openBirthdayWindow: () => void;
   openSpecialMessage: () => void;
+  openOOIIAA: () => void;
   handleShutdown: () => void;
   closeStartMenu: () => void;
 }
@@ -14,6 +15,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
   openMyComputer,
   openBirthdayWindow,
   openSpecialMessage,
+  openOOIIAA,
   handleShutdown,
   closeStartMenu
 }) => {
@@ -52,7 +54,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
         <div className="menu-item" onClick={() => handleItemClick(openSpecialMessage)}>
           <img 
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
-            alt="Special Message" 
+            alt="Cute_message.exe" 
           />
           <span>Special Message</span>
         </div>
@@ -61,7 +63,14 @@ const StartMenu: React.FC<StartMenuProps> = ({
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
             alt="Birthday" 
           />
-          <span>Birthday Greeting</span>
+          <span>HappyBirthday.exe</span>
+        </div>
+        <div className="menu-item" onClick={() => handleItemClick(openOOIIAA)}>
+          <img 
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
+            alt="OOIIAA" 
+          />
+          <span>ooiiaa.mp4</span>
         </div>
         <div className="menu-item" onClick={() => handleItemClick(openMyComputer)}>
           <img 

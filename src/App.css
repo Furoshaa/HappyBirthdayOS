@@ -594,3 +594,24 @@ button {
     bottom: 40px;
   }
 }
+
+/* OOIIAA Window */
+.ooiiaa-window {
+  min-width: 400px;
+  min-height: 300px;
+}
+
+.ooiiaa-body {
+  position: relative;
+  background-color: #000000;
+  padding: 0;
+  height: calc(100% - 30px); /* Reduce height to prevent overflow at bottom */
+  overflow: hidden; /* Allow content to overflow */
+}
+
+.ooiiaa-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #000;
+}

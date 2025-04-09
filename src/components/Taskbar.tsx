@@ -8,10 +8,11 @@ interface TaskbarProps {
     birthday: boolean;
     myComputer: boolean;
     special: boolean;
+    ooiiaa: boolean;
   };
   activeWindow: string | null;
-  setActiveWindow: (window: string) => void;
-  bringWindowToFront: (window: string) => void;
+  setActiveWindow: (windowName: string) => void;
+  bringWindowToFront: (windowName: string) => void;
 }
 
 const Taskbar: React.FC<TaskbarProps> = ({
@@ -26,16 +27,19 @@ const Taskbar: React.FC<TaskbarProps> = ({
   
   // Handle clicking on a taskbar button
   const handleTaskbarButtonClick = (windowName: string) => {
-    bringWindowToFront(windowName);
     setActiveWindow(windowName);
+    bringWindowToFront(windowName);
   };
   
   return (
     <div className="taskbar">
-      <div className="start-button" onClick={toggleStartMenu}>
+      <div 
+        className={`start-button ${startMenuOpen ? 'active' : ''}`}
+        onClick={toggleStartMenu}
+      >
         <img 
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRkZGRkYiIC8+PC9zdmc+" 
-          alt="Heart logo" 
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSAxSDggVjhIMSBaIiBmaWxsPSIjMDAwMEFBIi8+PHBhdGggZD0iTTkgMUgxNiBWOEg5IFoiIGZpbGw9IiNmZjBmMDAiLz48cGF0aCBkPSJNMSA5SDggVjE2SDEgWiIgZmlsbD0iIzAwY2YwMCIvPjxwYXRoIGQ9Ik05IDlIMTYgVjE2SDkgWiIgZmlsbD0iI2ZmY2YwMCIvPjwvc3ZnPg==" 
+          alt="Start" 
         />
         <span>Start</span>
       </div>
@@ -51,7 +55,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
               src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
               alt="Birthday" 
             />
-            <span>Birthday</span>
+            <span>HappyBirthday.exe</span>
           </div>
         )}
         
@@ -77,7 +81,20 @@ const Taskbar: React.FC<TaskbarProps> = ({
               src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
               alt="Special Message" 
             />
-            <span>Special Message</span>
+            <span>Cute_message.exe</span>
+          </div>
+        )}
+        
+        {openWindows.ooiiaa && (
+          <div 
+            className={`taskbar-button ${activeWindow === 'ooiiaa' ? 'active' : ''}`}
+            onClick={() => handleTaskbarButtonClick('ooiiaa')}
+          >
+            <img 
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
+              alt="OOIIAA" 
+            />
+            <span>ooiiaa.mp4</span>
           </div>
         )}
       </div>
