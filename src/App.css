@@ -533,6 +533,19 @@ button {
   .special-message-body {
     max-height: 255px; /* Set a max height to ensure it stays within window */
   }
+  
+  .ooiiaa-window {
+    min-height: 150px !important;
+  }
+  
+  .ooiiaa-body {
+    height: calc(100% - 30px) !important;
+    max-height: none !important;
+  }
+  
+  .ooiiaa-video {
+    max-height: none !important;
+  }
 
   /* Fix start menu position for mobile */
   .start-menu {
@@ -605,7 +618,7 @@ button {
   position: relative;
   background-color: #000000;
   padding: 0;
-  height: calc(100% - 30px); /* Reduce height to prevent overflow at bottom */
+  height: calc(100% - 30px); /* Standard calculation used in other windows */
   overflow: hidden; /* Allow content to overflow */
 }
 

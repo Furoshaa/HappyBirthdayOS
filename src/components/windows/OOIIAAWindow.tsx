@@ -36,12 +36,13 @@ const OOIIAAWindow: React.FC<OOIIAAWindowProps> = ({
       ref={windowRef}
       className="window ooiiaa-window"
       style={{ 
-        top: isMobile ? '70%' : '60%', 
+        top: isMobile ? '65%' : '60%', 
         left: isMobile ? '50%' : '80%', 
         width: isMobile ? '90%' : '500px', 
-        height: isMobile ? 'auto' : 'auto',
+        height: isMobile ? '213px' : 'auto',
         minWidth: isMobile ? '300px' : '500px',
         maxWidth: isMobile ? '90%' : '500px',
+        maxHeight: isMobile ? '213px' : 'none',
         zIndex: zIndex 
       }}
       onClick={focusWindow}
