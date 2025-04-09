@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import '98.css/dist/98.css';
 import DesktopIcon from './components/DesktopIcon';
@@ -11,6 +11,17 @@ function App() {
   const [currentTime, setCurrentTime] = useState<string>('');
   const [startMenuOpen, setStartMenuOpen] = useState<boolean>(false);
   const [shutdownActive, setShutdownActive] = useState<boolean>(false);
+  
+  // References for draggable windows
+  const birthdayWindowRef = useRef<HTMLDivElement>(null);
+  const myComputerWindowRef = useRef<HTMLDivElement>(null);
+  const specialWindowRef = useRef<HTMLDivElement>(null);
+  
+  // State to track dragging
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [activeWindow, setActiveWindow] = useState<string | null>(null);
+  const [windowZIndex, setWindowZIndex] = useState({ birthday: 10, myComputer: 10, special: 10 });
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const updateTime = () => {
@@ -89,12 +100,146 @@ function App() {
     }, 3000);
   };
 
+  // Handle mouse down on title bar to start dragging
+  const handleMouseDown = (e: React.MouseEvent, windowName: string) => {
+    // Only allow dragging from the title bar (not from buttons)
+    if (!(e.target as HTMLElement).closest('.title-bar-controls')) {
+      setIsDragging(true);
+      setActiveWindow(windowName);
+      
+      // Update z-index to bring window to front
+      setWindowZIndex(prev => ({
+        ...prev,
+        [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
+      }));
+      
+      let windowElement: HTMLDivElement | null = null;
+      
+      switch (windowName) {
+        case 'birthday':
+          windowElement = birthdayWindowRef.current;
+          break;
+        case 'myComputer':
+          windowElement = myComputerWindowRef.current;
+          break;
+        case 'special':
+          windowElement = specialWindowRef.current;
+          break;
+      }
+      
+      if (windowElement) {
+        const rect = windowElement.getBoundingClientRect();
+        setDragOffset({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+        
+        // Add dragging class
+        windowElement.classList.add('dragging');
+      }
+      
+      e.preventDefault();
+    }
+  };
+
+  // Handle mouse move for dragging
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && activeWindow) {
+      let windowElement: HTMLDivElement | null = null;
+      
+      switch (activeWindow) {
+        case 'birthday':
+          windowElement = birthdayWindowRef.current;
+          break;
+        case 'myComputer':
+          windowElement = myComputerWindowRef.current;
+          break;
+        case 'special':
+          windowElement = specialWindowRef.current;
+          break;
+      }
+      
+      if (windowElement) {
+        windowElement.style.left = `${e.clientX - dragOffset.x}px`;
+        windowElement.style.top = `${e.clientY - dragOffset.y}px`;
+        windowElement.style.transform = 'none'; // Remove default centering
+      }
+    }
+  };
+
+  // Handle mouse up to stop dragging
+  const handleMouseUp = () => {
+    if (isDragging && activeWindow) {
+      let windowElement: HTMLDivElement | null = null;
+      
+      switch (activeWindow) {
+        case 'birthday':
+          windowElement = birthdayWindowRef.current;
+          break;
+        case 'myComputer':
+          windowElement = myComputerWindowRef.current;
+          break;
+        case 'special':
+          windowElement = specialWindowRef.current;
+          break;
+      }
+      
+      if (windowElement) {
+        // Remove dragging class
+        windowElement.classList.remove('dragging');
+      }
+    }
+    
+    setIsDragging(false);
+    setActiveWindow(null);
+  };
+
+  // Add mousemove and mouseup event listeners for dragging
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging && activeWindow) {
+        let windowElement: HTMLDivElement | null = null;
+        
+        switch (activeWindow) {
+          case 'birthday':
+            windowElement = birthdayWindowRef.current;
+            break;
+          case 'myComputer':
+            windowElement = myComputerWindowRef.current;
+            break;
+          case 'special':
+            windowElement = specialWindowRef.current;
+            break;
+        }
+        
+        if (windowElement) {
+          windowElement.style.left = `${e.clientX - dragOffset.x}px`;
+          windowElement.style.top = `${e.clientY - dragOffset.y}px`;
+          windowElement.style.transform = 'none'; // Remove default centering
+        }
+      }
+    };
+    
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+      setActiveWindow(null);
+    };
+    
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, activeWindow, dragOffset]);
+
   const renderDialogContent = () => {
     switch (step) {
       case 0:
         return (
           <>
-            <div className="title-bar">
+            <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
               <div className="title-bar-text">Important Question</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -112,7 +257,7 @@ function App() {
       case 1:
         return (
           <>
-            <div className="title-bar">
+            <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
               <div className="title-bar-text">Another Question</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -130,7 +275,7 @@ function App() {
       case 2:
         return (
           <>
-            <div className="title-bar">
+            <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
               <div className="title-bar-text">Final Question</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -148,7 +293,7 @@ function App() {
       case 3:
         return (
           <>
-            <div className="title-bar celebration">
+            <div className="title-bar celebration" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
               <div className="title-bar-text">🎂 Happy Birthday! 🎂</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -172,7 +317,7 @@ function App() {
   };
 
   return (
-    <div className="App" onClick={handleDocumentClick}>
+    <div className="App" onClick={handleDocumentClick} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
       {shutdownActive ? (
         <div className="shutdown-screen">
           <div className="shutdown-text">
@@ -204,15 +349,29 @@ function App() {
           
           {/* Main dialog window */}
           {showing && (
-            <div className={`window birthday-window ${step === 3 ? 'celebration-window' : ''}`}>
+            <div 
+              ref={birthdayWindowRef}
+              className={`window birthday-window ${step === 3 ? 'celebration-window' : ''}`}
+              style={{ zIndex: windowZIndex.birthday }}
+            >
               {renderDialogContent()}
             </div>
           )}
           
           {/* My Computer Window */}
           {showingMyComputer && (
-            <div className="window my-computer-window" style={{ top: '20%', left: '30%', width: '400px', height: '300px' }}>
-              <div className="title-bar">
+            <div 
+              ref={myComputerWindowRef}
+              className="window my-computer-window"
+              style={{ 
+                top: '20%', 
+                left: '30%', 
+                width: '400px', 
+                height: '300px',
+                zIndex: windowZIndex.myComputer 
+              }}
+            >
+              <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'myComputer')}>
                 <div className="title-bar-text">My Computer</div>
                 <div className="title-bar-controls">
                   <button aria-label="Minimize"></button>
@@ -253,8 +412,18 @@ function App() {
           
           {/* Extra window that appears when icon is clicked */}
           {showingExtra && (
-            <div className="window special-window" style={{ top: '30%', left: '60%', width: '400px', height: '300px' }}>
-              <div className="title-bar">
+            <div 
+              ref={specialWindowRef}
+              className="window special-window"
+              style={{ 
+                top: '30%', 
+                left: '60%', 
+                width: '400px', 
+                height: '300px',
+                zIndex: windowZIndex.special 
+              }}
+            >
+              <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'special')}>
                 <div className="title-bar-text">❤️ Special Message</div>
                 <div className="title-bar-controls">
                   <button aria-label="Close" onClick={closeExtraWindow}></button>

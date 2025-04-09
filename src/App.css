@@ -45,6 +45,20 @@ body {
   transition: all 0.2s ease;
 }
 
+.window.dragging {
+  transition: none; /* Disable transitions while dragging */
+  user-select: none; /* Prevent text selection during drag */
+}
+
+.title-bar {
+  cursor: move; /* Show move cursor on title bar */
+  user-select: none; /* Prevent text selection on title bar */
+}
+
+.title-bar-controls {
+  cursor: default; /* Reset cursor for control buttons */
+}
+
 .celebration-window {
   width: 450px;
 }
