@@ -27,7 +27,7 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ icon, label, onClick, style }
         )}
         {icon === 'heart' && (
           <svg width="32" height="32" viewBox="0 0 32 32">
-            <path d="M16,28 C16,28 4,21 4,12 C4,6 8,4 12,4 C14,4 16,6 16,6 C16,6 18,4 20,4 C24,4 28,6 28,12 C28,21 16,28 16,28 Z" 
+            <path d="M16,28 L4,16 C1,13 1,8 4,5 C7,2 12,2 16,8 C20,2 25,2 28,5 C31,8 31,13 28,16 L16,28 Z" 
                   fill="#FF1493" />
           </svg>
         )}

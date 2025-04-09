@@ -401,16 +401,9 @@ function App() {
                     />
                     <div>Local Disk (C:)</div>
                   </div>
-                  <div className="explorer-item">
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiA2SDI2VjI2SDZWNlpNMTAgMTBWMjJIMjJWMTBIMTBaIiBmaWxsPSIjQ0Q0MDBFII8+PC9zdmc+" 
-                      alt="CD Drive" 
-                    />
-                    <div>CD Drive (D:)</div>
-                  </div>
                   <div className="explorer-item" onClick={handleBirthdayIconClick}>
                     <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggQzE2LDI4IDQsMjEgNCwxMiBDNCw2IDgsNCAxMiw0IEMxNCw0IDE2LDYgMTYsNiBDMTYsNiAxOCw0IDIwLDQgQzI0LDQgMjgsNiAyOCwxMiBDMjgsMjEgMTYsMjggMTYsMjggWiIgZmlsbD0iI2ZmNjliNCIvPjwvc3ZnPg==" 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
                       alt="Birthday" 
                     />
                     <div>HAPPY BIRTHDAY .EXE</div>
@@ -418,7 +411,7 @@ function App() {
                   
                   <div className="explorer-item" onClick={handleSpecialMessageClick}>
                     <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggQzE2LDI4IDQsMjEgNCwxMiBDNCw2IDgsNCAxMiw0IEMxNCw0IDE2LDYgMTYsNiBDMTYsNiAxOCw0IDIwLDQgQzI0LDQgMjgsNiAyOCwxMiBDMjgsMjEgMTYsMjggMTYsMjggWiIgZmlsbD0iI2ZmMTQ5MyIvPjwvc3ZnPg==" 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
                       alt="Special Message" 
                     />
                     <div>SPECIAL MESSAGE .EXE</div>
@@ -496,7 +489,7 @@ function App() {
           <div className="taskbar">
             <div className="start-button" onClick={toggleStartMenu}>
               <img 
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBDOCwxNCAyLDEwIDIsNiBDMiwzIDQsMiA2LDIgQzcsMiA4LDMgOCwzIEM4LDMgOSwyIDEwLDIgQzEyLDIgMTQsMyAxNCw2IEMxNCwxMCA4LDE0IDgsMTQgWiIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPg==" 
+                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRkZGRkYiIC8+PC9zdmc+" 
                 alt="Heart logo" 
               />
               <span>Start</span>
@@ -509,9 +502,16 @@ function App() {
                   <span>HappyBirthday<span className="win95">OS</span></span>
                 </div>
                 <div className="start-menu-items">
+                  <div className="menu-item" onClick={() => {setShowingExtra(true); setStartMenuOpen(false);}}>
+                    <img 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
+                      alt="Special Message" 
+                    />
+                    <span>Special Message</span>
+                  </div>
                   <div className="menu-item" onClick={() => {setShowing(true); setStartMenuOpen(false);}}>
                     <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMyAzSDEzVjEzSDNWM1pNNiA2SDEwVjEwSDZWNloiIGZpbGw9IiNmZjY5YjQiLz48L3N2Zz4=" 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
                       alt="Birthday" 
                     />
                     <span>Birthday Greeting</span>
@@ -522,13 +522,6 @@ function App() {
                       alt="My Computer" 
                     />
                     <span>My Computer</span>
-                  </div>
-                  <div className="menu-item" onClick={() => {setShowingExtra(true); setStartMenuOpen(false);}}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFoiIGZpbGw9IiNmZjE0OTMiLz48L3N2Zz4=" 
-                      alt="Special" 
-                    />
-                    <span>Special Message</span>
                   </div>
                   <div className="separator"></div>
                   <div className="menu-item" onClick={handleShutdown}>
