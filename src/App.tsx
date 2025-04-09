@@ -567,7 +567,7 @@ function App() {
                   </div>
                 </div>
                 <div className="status-bar">
-                  <div>4 object(s)</div>
+                  <div>3 object(s)</div>
                 </div>
               </div>
             </div>

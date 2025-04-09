@@ -372,7 +372,6 @@ button {
 .special-window {
   min-width: 400px;
   min-height: 300px;
-  overflow: visible; /* Allow content to overflow */
 }
 
 .special-message-body {
@@ -381,7 +380,7 @@ button {
   padding: 20px;
   height: calc(100% - 30px); /* Reduce height to prevent overflow at bottom */
   max-height: 260px; /* Set a max height to ensure it stays within window */
-  overflow: visible; /* Allow content to overflow */
+  overflow: hidden; /* Allow content to overflow */
 }
 
 .love-text {
