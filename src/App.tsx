@@ -2,6 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import '98.css/dist/98.css';
 
+// Import images
+import grill from './components/images/grill.png';
+import heeee from './components/images/heeee.png';
+import meeeeemeeee from './components/images/meeeeemeeee.png';
+import taptap from './components/images/taptap.png';
+import chok from './components/images/chok.png';
+import mouai from './components/images/mouai.png';
+import stop from './components/images/stop.png';
+import weewee from './components/images/weewee.png';
+import bailando from './components/images/bailando.png';
+import hate from './components/images/hate.png';
+import vms from './components/images/vms.png';
+import caca from './components/images/caca.png';
+
+// Import audio
+import boomvine from './components/audio/boomvine.mp3';
+
 // Import Components
 import Desktop from './components/Desktop';
 import Taskbar from './components/Taskbar';
@@ -50,6 +67,12 @@ function App() {
   // State to track dragging
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  
+  // Random image state
+  const [randomImage, setRandomImage] = useState<string | null>(null);
+  const [isImageVisible, setIsImageVisible] = useState<boolean>(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   // Update time in taskbar
   useEffect(() => {
@@ -113,16 +136,55 @@ function App() {
     }
   };
   
-  const handleNoClick = () => {
-    // Move the dialog randomly when "No" is clicked
-    const dialogElement = birthdayWindowRef.current;
-    if (dialogElement) {
-      const randomX = Math.floor(Math.random() * (window.innerWidth - 300));
-      const randomY = Math.floor(Math.random() * (window.innerHeight - 200));
-      dialogElement.style.position = 'absolute';
-      dialogElement.style.left = `${randomX}px`;
-      dialogElement.style.top = `${randomY}px`;
+  // Add this function to handle image display
+  const showRandomImage = () => {
+    const images = [
+      grill,
+      heeee,
+      meeeeemeeee,
+      taptap,
+      chok,
+      mouai,
+      stop,
+      weewee,
+      bailando,
+      hate,
+      vms,
+      caca
+    ];
+
+    // Clear any existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
+
+    const randomImagePath = images[Math.floor(Math.random() * images.length)];
+    setRandomImage(randomImagePath);
+    setIsImageVisible(true);
+
+    // Play sound
+    if (audioRef.current) {
+      audioRef.current.src = boomvine;
+      audioRef.current.play();
+    }
+
+    // Hide image after 1 second with animation
+    timerRef.current = setTimeout(() => {
+      setIsImageVisible(false);
+    }, 1000);
+  };
+  
+  // Cleanup timer on component unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+  
+  const handleNoClick = () => {
+    showRandomImage();
   };
   
   // Window control functions
@@ -567,6 +629,42 @@ function App() {
           handleSpecialMessageClick={handleSpecialMessageClick}
           handleOOIIAAClick={handleOOIIAAClick}
         >
+          {/* Random Image Display */}
+          {randomImage && (
+            <div 
+              className={`random-image-container ${isImageVisible ? 'visible' : ''}`}
+              style={{
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+                transition: isImageVisible ? 'none' : 'opacity 1s ease-out',
+                opacity: isImageVisible ? 1 : 0,
+                pointerEvents: 'none',
+                mixBlendMode: 'normal',
+                backgroundColor: 'transparent'
+              }}
+            >
+              <img 
+                src={randomImage} 
+                alt="Random" 
+                style={{
+                  maxWidth: '80vw',
+                  maxHeight: '80vh',
+                  objectFit: 'contain',
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  MozUserSelect: 'none',
+                  msUserSelect: 'none'
+                }}
+              />
+            </div>
+          )}
+          
+          <audio ref={audioRef} />
+          
           {/* Main birthday dialog window */}
           {showing && (
             <BirthdayWindow
