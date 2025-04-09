@@ -29,6 +29,11 @@ body {
   transition: background-color 1s ease;
 }
 
+.cute-bg {
+  background-color: #e8d8e0;
+  background-image: radial-gradient(circle, #e8d8e0, #d8c8d0);
+}
+
 .celebration-bg {
   background-color: #ff69b4;
   background-image: radial-gradient(circle, #ff69b4, #ff1493);
@@ -367,14 +372,16 @@ button {
 .special-window {
   min-width: 400px;
   min-height: 300px;
+  overflow: visible; /* Allow content to overflow */
 }
 
 .special-message-body {
   position: relative;
   background-color: #fff8f8;
   padding: 20px;
-  height: calc(100% - 20px);
-  overflow: hidden;
+  height: calc(100% - 30px); /* Reduce height to prevent overflow at bottom */
+  max-height: 260px; /* Set a max height to ensure it stays within window */
+  overflow: visible; /* Allow content to overflow */
 }
 
 .love-text {
@@ -403,6 +410,7 @@ button {
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  overflow: visible; /* Allow hearts to be visible outside container */
 }
 
 .floating-heart {

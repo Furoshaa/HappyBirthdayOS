@@ -55,7 +55,10 @@ function App() {
 
   const closeWindow = () => {
     setShowing(false);
-    // Removed the auto-reopen functionality
+    // Reset step to remove celebration effects
+    if (step === 3) {
+      setStep(0);
+    }
   };
 
   const handleBirthdayIconClick = () => {
@@ -306,7 +309,7 @@ function App() {
                 <p>joy, laughter and lots of love! ❤️</p>
               </div>
               <div className="button-container">
-                <button onClick={() => setStep(0)}>Start Over</button>
+                <button onClick={closeWindow}>Close</button>
               </div>
             </div>
           </>
@@ -325,7 +328,7 @@ function App() {
           </div>
         </div>
       ) : (
-        <div className={`desktop ${step === 3 ? 'celebration-bg' : ''}`}>
+        <div className={`desktop ${step === 3 ? 'celebration-bg' : 'cute-bg'}`}>
           {/* Desktop Icons */}
           <DesktopIcon 
             icon="my-computer" 
@@ -339,10 +342,20 @@ function App() {
           
           <DesktopIcon 
             icon="heart" 
-            label="Birthday Wishes" 
+            label="HAPPY BIRTHDAY .EXE" 
             onClick={handleBirthdayIconClick}
             style={{
               top: '120px',
+              left: '20px'
+            }}
+          />
+          
+          <DesktopIcon 
+            icon="heart" 
+            label="SPECIAL MESSAGE .EXE" 
+            onClick={handleSpecialMessageClick}
+            style={{
+              top: '220px',
               left: '20px'
             }}
           />
@@ -397,20 +410,28 @@ function App() {
                   </div>
                   <div className="explorer-item" onClick={handleBirthdayIconClick}>
                     <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCA4TDI0IDhMMjQgMjRMOCAyNFoiIGZpbGw9IiNmZjY5YjQiLz48L3N2Zz4=" 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggQzE2LDI4IDQsMjEgNCwxMiBDNCw2IDgsNCAxMiw0IEMxNCw0IDE2LDYgMTYsNiBDMTYsNiAxOCw0IDIwLDQgQzI0LDQgMjgsNiAyOCwxMiBDMjgsMjEgMTYsMjggMTYsMjggWiIgZmlsbD0iI2ZmNjliNCIvPjwvc3ZnPg==" 
                       alt="Birthday" 
                     />
-                    <div>BIRTHDAY.EXE</div>
+                    <div>HAPPY BIRTHDAY .EXE</div>
+                  </div>
+                  
+                  <div className="explorer-item" onClick={handleSpecialMessageClick}>
+                    <img 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggQzE2LDI4IDQsMjEgNCwxMiBDNCw2IDgsNCAxMiw0IEMxNCw0IDE2LDYgMTYsNiBDMTYsNiAxOCw0IDIwLDQgQzI0LDQgMjgsNiAyOCwxMiBDMjgsMjEgMTYsMjggMTYsMjggWiIgZmlsbD0iI2ZmMTQ5MyIvPjwvc3ZnPg==" 
+                      alt="Special Message" 
+                    />
+                    <div>SPECIAL MESSAGE .EXE</div>
                   </div>
                 </div>
                 <div className="status-bar">
-                  <div>3 object(s)</div>
+                  <div>4 object(s)</div>
                 </div>
               </div>
             </div>
           )}
           
-          {/* Extra window that appears when icon is clicked */}
+          {/* Special message window with animated hearts */}
           {showingExtra && (
             <div 
               ref={specialWindowRef}
@@ -475,8 +496,8 @@ function App() {
           <div className="taskbar">
             <div className="start-button" onClick={toggleStartMenu}>
               <img 
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwSDhWOEgwVjBaTTggOEgxNlYxNkg4VjhaTTAgOEg4VjE2SDBWOFpNOCAwSDE2VjhIOFYwWiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" 
-                alt="Windows logo" 
+                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBDOCwxNCAyLDEwIDIsNiBDMiwzIDQsMiA2LDIgQzcsMiA4LDMgOCwzIEM4LDMgOSwyIDEwLDIgQzEyLDIgMTQsMyAxNCw2IEMxNCwxMCA4LDE0IDgsMTQgWiIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPg==" 
+                alt="Heart logo" 
               />
               <span>Start</span>
             </div>
@@ -485,7 +506,7 @@ function App() {
             {startMenuOpen && (
               <div className="start-menu">
                 <div className="start-menu-sidebar">
-                  <span>Windows<span className="win95">95</span></span>
+                  <span>HappyBirthday<span className="win95">OS</span></span>
                 </div>
                 <div className="start-menu-items">
                   <div className="menu-item" onClick={() => {setShowing(true); setStartMenuOpen(false);}}>
