@@ -23,8 +23,6 @@ const Desktop: React.FC<DesktopProps> = ({
   const getBackgroundClass = () => {
     if (step === 3) {
       return 'celebration-bg';
-    } else if (step >= 1) {
-      return 'cute-bg';
     }
     return '';
   };

@@ -64,7 +64,7 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
               src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
               alt="Birthday" 
             />
-            <div>HappyBirthday.exe</div>
+            <div>Happy_Birthday.exe</div>
           </div>
           
           <div className="explorer-item" onClick={handleSpecialMessageClick}>

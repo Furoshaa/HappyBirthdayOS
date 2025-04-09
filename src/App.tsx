@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import '98.css/dist/98.css';
-import DesktopIcon from './components/DesktopIcon';
 
 // Import Components
 import Desktop from './components/Desktop';

@@ -56,19 +56,19 @@ const StartMenu: React.FC<StartMenuProps> = ({
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
             alt="Cute_message.exe" 
           />
-          <span>Special Message</span>
+          <span>Cute_message.exe</span>
         </div>
         <div className="menu-item" onClick={() => handleItemClick(openBirthdayWindow)}>
           <img 
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
             alt="Birthday" 
           />
-          <span>HappyBirthday.exe</span>
+          <span>Happy_Birthday.exe</span>
         </div>
         <div className="menu-item" onClick={() => handleItemClick(openOOIIAA)}>
           <img 
-            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
-            alt="OOIIAA" 
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIyIiB5PSIzLjUiIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiBmaWxsPSIjNDE2OUUxIi8+PHJlY3QgeD0iMyIgeT0iNC41IiB3aWR0aD0iMTAiIGhlaWdodD0iNyIgZmlsbD0iIzAwMDAwMCIvPjxwb2x5Z29uIHBvaW50cz0iNiw2IDEwLDggNiwxMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPg==" 
+            alt="Video" 
           />
           <span>ooiiaa.mp4</span>
         </div>
