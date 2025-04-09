@@ -10,6 +10,7 @@ interface BirthdayWindowProps {
   handleMouseDown: (e: React.MouseEvent, windowName: string) => void;
   handleTouchStart: (e: React.TouchEvent, windowName: string) => void;
   isMobile: boolean;
+  focusWindow: () => void;
 }
 
 const BirthdayWindow: React.FC<BirthdayWindowProps> = ({ 
@@ -21,7 +22,8 @@ const BirthdayWindow: React.FC<BirthdayWindowProps> = ({
   zIndex,
   handleMouseDown,
   handleTouchStart,
-  isMobile
+  isMobile,
+  focusWindow
 }) => {
   const renderDialogContent = () => {
     switch (step) {
@@ -123,6 +125,7 @@ const BirthdayWindow: React.FC<BirthdayWindowProps> = ({
         left: isMobile ? '50%' : '50%',
         width: isMobile ? '90%' : '400px'
       }}
+      onClick={focusWindow}
     >
       {renderDialogContent()}
     </div>

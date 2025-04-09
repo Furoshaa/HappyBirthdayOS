@@ -80,8 +80,18 @@ function App() {
     };
   }, []);
   
+  // Bring a window to focus without triggering drag
+  const focusWindow = (windowName: string) => {
+    setActiveWindow(windowName);
+    setWindowZIndex(prev => ({
+      ...prev,
+      [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
+    }));
+  };
+  
   // Bring a window to the front
   const bringWindowToFront = (windowName: string) => {
+    setActiveWindow(windowName);
     setWindowZIndex(prev => ({
       ...prev,
       [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
@@ -512,15 +522,16 @@ function App() {
           {/* Main birthday dialog window */}
           {showing && (
             <BirthdayWindow
-              step={step}
               closeWindow={closeBirthdayWindow}
               handleYesClick={handleYesClick}
               handleNoClick={handleNoClick}
+              step={step}
               windowRef={birthdayWindowRef}
               zIndex={windowZIndex.birthday}
               handleMouseDown={handleMouseDown}
               handleTouchStart={handleTouchStart}
               isMobile={isMobile}
+              focusWindow={() => focusWindow('birthday')}
             />
           )}
           
@@ -535,6 +546,7 @@ function App() {
               handleMouseDown={handleMouseDown}
               handleTouchStart={handleTouchStart}
               isMobile={isMobile}
+              focusWindow={() => focusWindow('myComputer')}
             />
           )}
           
@@ -547,6 +559,7 @@ function App() {
               handleMouseDown={handleMouseDown}
               handleTouchStart={handleTouchStart}
               isMobile={isMobile}
+              focusWindow={() => focusWindow('special')}
             />
           )}
           

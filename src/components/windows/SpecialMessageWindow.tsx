@@ -7,6 +7,7 @@ interface SpecialMessageWindowProps {
   handleMouseDown: (e: React.MouseEvent, windowName: string) => void;
   handleTouchStart: (e: React.TouchEvent, windowName: string) => void;
   isMobile: boolean;
+  focusWindow: () => void;
 }
 
 const SpecialMessageWindow: React.FC<SpecialMessageWindowProps> = ({
@@ -15,7 +16,8 @@ const SpecialMessageWindow: React.FC<SpecialMessageWindowProps> = ({
   zIndex,
   handleMouseDown,
   handleTouchStart,
-  isMobile
+  isMobile,
+  focusWindow
 }) => {
   return (
     <div 
@@ -30,6 +32,7 @@ const SpecialMessageWindow: React.FC<SpecialMessageWindowProps> = ({
         maxWidth: isMobile ? '90%' : '600px',
         zIndex: zIndex 
       }}
+      onClick={focusWindow}
     >
       <div className="title-bar" 
         onMouseDown={(e) => handleMouseDown(e, 'special')}

@@ -9,6 +9,7 @@ interface MyComputerWindowProps {
   handleMouseDown: (e: React.MouseEvent, windowName: string) => void;
   handleTouchStart: (e: React.TouchEvent, windowName: string) => void;
   isMobile: boolean;
+  focusWindow: () => void;
 }
 
 const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
@@ -19,21 +20,23 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
   zIndex,
   handleMouseDown,
   handleTouchStart,
-  isMobile
+  isMobile,
+  focusWindow
 }) => {
   return (
     <div 
       ref={windowRef}
       className="window my-computer-window"
       style={{ 
-        top: isMobile ? '45%' : '20%', 
+        top: isMobile ? '40%' : '20%', 
         left: isMobile ? '50%' : '30%', 
-        width: isMobile ? '70%' : '480px', 
-        height: isMobile ? '40%' : '350px',
-        minWidth: isMobile ? '70%' : '480px',
-        maxWidth: isMobile ? '70%' : '480px',
+        width: isMobile ? '70%' : '400px', 
+        height: isMobile ? '40%' : '300px',
+        minWidth: isMobile ? '70%' : '400px',
+        maxWidth: isMobile ? '70%' : '400px',
         zIndex: zIndex 
       }}
+      onClick={focusWindow}
     >
       <div className="title-bar" 
         onMouseDown={(e) => handleMouseDown(e, 'myComputer')}
