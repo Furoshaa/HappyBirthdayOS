@@ -1,0 +1,67 @@
+import React from 'react';
+
+interface StartMenuProps {
+  isOpen: boolean;
+  openMyComputer: () => void;
+  openBirthdayWindow: () => void;
+  openSpecialMessage: () => void;
+  handleShutdown: () => void;
+  closeStartMenu: () => void;
+}
+
+const StartMenu: React.FC<StartMenuProps> = ({
+  isOpen,
+  openMyComputer,
+  openBirthdayWindow,
+  openSpecialMessage,
+  handleShutdown,
+  closeStartMenu
+}) => {
+  if (!isOpen) return null;
+  
+  const handleItemClick = (action: () => void) => {
+    action();
+    closeStartMenu();
+  };
+  
+  return (
+    <div className="start-menu">
+      <div className="start-menu-sidebar">
+        <span>HappyBirthday<span className="win95">OS</span></span>
+      </div>
+      <div className="start-menu-items">
+        <div className="menu-item" onClick={() => handleItemClick(openSpecialMessage)}>
+          <img 
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
+            alt="Special Message" 
+          />
+          <span>Special Message</span>
+        </div>
+        <div className="menu-item" onClick={() => handleItemClick(openBirthdayWindow)}>
+          <img 
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
+            alt="Birthday" 
+          />
+          <span>Birthday Greeting</span>
+        </div>
+        <div className="menu-item" onClick={() => handleItemClick(openMyComputer)}>
+          <img 
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMiAySDUuNVY2SDJWMlpNNi41IDJIMTBWN0g2LjVWMlpNMiA3SDUuNVYxMUgyVjdaTTYuNSA4SDEwVjE0SDYuNVY4Wk0xMSAyVjE0SDE0VjJIMTFaIiBmaWxsPSIjMDAwMEEwIi8+PC9zdmc+" 
+            alt="My Computer" 
+          />
+          <span>My Computer</span>
+        </div>
+        <div className="separator"></div>
+        <div className="menu-item" onClick={() => handleItemClick(handleShutdown)}>
+          <img 
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMiAyTDE0IDJMMTQgMTRMMiAxNFoiIHN0cm9rZT0iIzAwMCIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00IDhIMTIiIHN0cm9rZT0iIzAwMCIvPjxwYXRoIGQ9Ik04IDEyVjQiIHN0cm9rZT0iIzAwMCIvPjwvc3ZnPg==" 
+            alt="Exit" 
+          />
+          <span>Shut Down...</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default StartMenu; 

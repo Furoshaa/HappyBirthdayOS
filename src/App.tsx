@@ -3,6 +3,16 @@ import './App.css';
 import '98.css/dist/98.css';
 import DesktopIcon from './components/DesktopIcon';
 
+// Import Components
+import Desktop from './components/Desktop';
+import Taskbar from './components/Taskbar';
+import StartMenu from './components/StartMenu';
+import BirthdayWindow from './components/windows/BirthdayWindow';
+import MyComputerWindow from './components/windows/MyComputerWindow';
+import SpecialMessageWindow from './components/windows/SpecialMessageWindow';
+import Confetti from './components/Confetti';
+import ShutdownScreen from './components/ShutdownScreen';
+
 function App() {
   const [step, setStep] = useState<number>(0);
   const [showing, setShowing] = useState<boolean>(true);
@@ -11,6 +21,18 @@ function App() {
   const [currentTime, setCurrentTime] = useState<string>('');
   const [startMenuOpen, setStartMenuOpen] = useState<boolean>(false);
   const [shutdownActive, setShutdownActive] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  
+  // Window management state
+  const [activeWindow, setActiveWindow] = useState<string | null>('birthday');
+  const [windowZIndex, setWindowZIndex] = useState({ birthday: 10, myComputer: 5, special: 5 });
+  
+  // Track open windows for taskbar
+  const openWindows = {
+    birthday: showing,
+    myComputer: showingMyComputer,
+    special: showingExtra
+  };
   
   // References for draggable windows
   const birthdayWindowRef = useRef<HTMLDivElement>(null);
@@ -19,31 +41,63 @@ function App() {
   
   // State to track dragging
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [activeWindow, setActiveWindow] = useState<string | null>(null);
-  const [windowZIndex, setWindowZIndex] = useState({ birthday: 10, myComputer: 10, special: 10 });
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-
+  
+  // Update time in taskbar
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      setCurrentTime(`${hours}:${minutes}`);
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const displayHours = hours % 12 || 12;
+      const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      setCurrentTime(`${displayHours}:${displayMinutes} ${ampm}`);
     };
-
-    updateTime();
+    
+    updateTime(); // Initial update
+    
     const intervalId = setInterval(updateTime, 60000); // Update every minute
-
+    
     return () => clearInterval(intervalId);
   }, []);
-
-  const handleYesClick = () => {
-    setStep(prevStep => prevStep + 1);
+  
+  // Detect if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Check on initial load
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+  
+  // Bring a window to the front
+  const bringWindowToFront = (windowName: string) => {
+    setWindowZIndex(prev => ({
+      ...prev,
+      [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
+    }));
   };
-
+  
+  // Birthday window logic
+  const handleYesClick = () => {
+    if (step < 3) {
+      setStep(prevStep => prevStep + 1);
+    }
+  };
+  
   const handleNoClick = () => {
     // Move the dialog randomly when "No" is clicked
-    const dialogElement = document.querySelector('.window.birthday-window') as HTMLElement;
+    const dialogElement = birthdayWindowRef.current;
     if (dialogElement) {
       const randomX = Math.floor(Math.random() * (window.innerWidth - 300));
       const randomY = Math.floor(Math.random() * (window.innerHeight - 200));
@@ -52,69 +106,90 @@ function App() {
       dialogElement.style.top = `${randomY}px`;
     }
   };
-
-  const closeWindow = () => {
+  
+  // Window control functions
+  const closeBirthdayWindow = () => {
     setShowing(false);
     // Reset step to remove celebration effects
     if (step === 3) {
       setStep(0);
     }
+    if (activeWindow === 'birthday') {
+      setActiveWindow(showingMyComputer ? 'myComputer' : (showingExtra ? 'special' : null));
+    }
   };
-
+  
   const handleBirthdayIconClick = () => {
     setShowing(true);
+    bringWindowToFront('birthday');
+    setActiveWindow('birthday');
   };
-
+  
   const handleMyComputerClick = () => {
     setShowingMyComputer(true);
+    bringWindowToFront('myComputer');
+    setActiveWindow('myComputer');
   };
-
+  
   const handleSpecialMessageClick = () => {
     setShowingExtra(true);
+    bringWindowToFront('special');
+    setActiveWindow('special');
   };
-
+  
   const closeMyComputerWindow = () => {
     setShowingMyComputer(false);
+    if (activeWindow === 'myComputer') {
+      setActiveWindow(showing ? 'birthday' : (showingExtra ? 'special' : null));
+    }
   };
-
+  
   const closeExtraWindow = () => {
     setShowingExtra(false);
+    if (activeWindow === 'special') {
+      setActiveWindow(showing ? 'birthday' : (showingMyComputer ? 'myComputer' : null));
+    }
   };
-
+  
+  // Start menu control
   const toggleStartMenu = () => {
     setStartMenuOpen(prevState => !prevState);
   };
-
-  // Close start menu when clicking elsewhere
+  
+  const closeStartMenu = () => {
+    setStartMenuOpen(false);
+  };
+  
+  // Handle clicks outside start menu
   const handleDocumentClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (!target.closest('.start-button') && !target.closest('.start-menu')) {
-      setStartMenuOpen(false);
+      closeStartMenu();
     }
   };
-
+  
   const handleShutdown = () => {
-    setStartMenuOpen(false);
+    closeStartMenu();
     setShutdownActive(true);
     // Reset after showing shutdown screen
     setTimeout(() => {
       setShutdownActive(false);
       setStep(0); // Reset to beginning
+      // Reset all window states
+      setShowing(true);
+      setShowingExtra(false);
+      setShowingMyComputer(false);
+      setActiveWindow('birthday');
     }, 3000);
   };
-
-  // Handle mouse down on title bar to start dragging
+  
+  // Window dragging logic
   const handleMouseDown = (e: React.MouseEvent, windowName: string) => {
     // Only allow dragging from the title bar (not from buttons)
     if (!(e.target as HTMLElement).closest('.title-bar-controls')) {
       setIsDragging(true);
       setActiveWindow(windowName);
-      
-      // Update z-index to bring window to front
-      setWindowZIndex(prev => ({
-        ...prev,
-        [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
-      }));
+      bringWindowToFront(windowName);
       
       let windowElement: HTMLDivElement | null = null;
       
@@ -140,12 +215,9 @@ function App() {
         // Add dragging class
         windowElement.classList.add('dragging');
       }
-      
-      e.preventDefault();
     }
   };
-
-  // Handle mouse move for dragging
+  
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isDragging && activeWindow) {
       let windowElement: HTMLDivElement | null = null;
@@ -169,8 +241,7 @@ function App() {
       }
     }
   };
-
-  // Handle mouse up to stop dragging
+  
   const handleMouseUp = () => {
     if (isDragging && activeWindow) {
       let windowElement: HTMLDivElement | null = null;
@@ -194,61 +265,15 @@ function App() {
     }
     
     setIsDragging(false);
-    setActiveWindow(null);
   };
-
-  // Add mousemove and mouseup event listeners for dragging
-  useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (isDragging && activeWindow) {
-        let windowElement: HTMLDivElement | null = null;
-        
-        switch (activeWindow) {
-          case 'birthday':
-            windowElement = birthdayWindowRef.current;
-            break;
-          case 'myComputer':
-            windowElement = myComputerWindowRef.current;
-            break;
-          case 'special':
-            windowElement = specialWindowRef.current;
-            break;
-        }
-        
-        if (windowElement) {
-          windowElement.style.left = `${e.clientX - dragOffset.x}px`;
-          windowElement.style.top = `${e.clientY - dragOffset.y}px`;
-          windowElement.style.transform = 'none'; // Remove default centering
-        }
-      }
-    };
-    
-    const handleGlobalMouseUp = () => {
-      setIsDragging(false);
-      setActiveWindow(null);
-    };
-    
-    document.addEventListener('mousemove', handleGlobalMouseMove);
-    document.addEventListener('mouseup', handleGlobalMouseUp);
-    
-    return () => {
-      document.removeEventListener('mousemove', handleGlobalMouseMove);
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
-    };
-  }, [isDragging, activeWindow, dragOffset]);
-
-  // Add touchStart handler for mobile drag
+  
+  // Add touch handlers for mobile dragging
   const handleTouchStart = (e: React.TouchEvent, windowName: string) => {
     // Only allow dragging from the title bar (not from buttons)
     if (!(e.target as HTMLElement).closest('.title-bar-controls')) {
       setIsDragging(true);
       setActiveWindow(windowName);
-      
-      // Update z-index to bring window to front
-      setWindowZIndex(prev => ({
-        ...prev,
-        [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
-      }));
+      bringWindowToFront(windowName);
       
       let windowElement: HTMLDivElement | null = null;
       
@@ -278,8 +303,7 @@ function App() {
       e.preventDefault();
     }
   };
-
-  // Handle touch move for mobile dragging
+  
   const handleTouchMove = (e: React.TouchEvent) => {
     if (isDragging && activeWindow && e.touches[0]) {
       let windowElement: HTMLDivElement | null = null;
@@ -303,8 +327,7 @@ function App() {
       }
     }
   };
-
-  // Handle touch end to stop mobile dragging
+  
   const handleTouchEnd = () => {
     if (isDragging && activeWindow) {
       let windowElement: HTMLDivElement | null = null;
@@ -328,10 +351,68 @@ function App() {
     }
     
     setIsDragging(false);
-    setActiveWindow(null);
   };
-
-  // Add touch event listeners
+  
+  // Add global event handlers for dragging
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging && activeWindow) {
+        let windowElement: HTMLDivElement | null = null;
+        
+        switch (activeWindow) {
+          case 'birthday':
+            windowElement = birthdayWindowRef.current;
+            break;
+          case 'myComputer':
+            windowElement = myComputerWindowRef.current;
+            break;
+          case 'special':
+            windowElement = specialWindowRef.current;
+            break;
+        }
+        
+        if (windowElement) {
+          windowElement.style.left = `${e.clientX - dragOffset.x}px`;
+          windowElement.style.top = `${e.clientY - dragOffset.y}px`;
+          windowElement.style.transform = 'none'; // Remove default centering
+        }
+      }
+    };
+    
+    const handleGlobalMouseUp = () => {
+      if (isDragging && activeWindow) {
+        let windowElement: HTMLDivElement | null = null;
+        
+        switch (activeWindow) {
+          case 'birthday':
+            windowElement = birthdayWindowRef.current;
+            break;
+          case 'myComputer':
+            windowElement = myComputerWindowRef.current;
+            break;
+          case 'special':
+            windowElement = specialWindowRef.current;
+            break;
+        }
+        
+        if (windowElement) {
+          windowElement.classList.remove('dragging');
+        }
+      }
+      
+      setIsDragging(false);
+    };
+    
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, activeWindow, dragOffset]);
+  
+  // Add touch event listeners for mobile
   useEffect(() => {
     const handleGlobalTouchMove = (e: TouchEvent) => {
       if (isDragging && activeWindow && e.touches[0]) {
@@ -359,7 +440,6 @@ function App() {
     
     const handleGlobalTouchEnd = () => {
       setIsDragging(false);
-      setActiveWindow(null);
     };
     
     document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
@@ -370,325 +450,90 @@ function App() {
       document.removeEventListener('touchend', handleGlobalTouchEnd);
     };
   }, [isDragging, activeWindow, dragOffset]);
-
-  const renderDialogContent = () => {
-    switch (step) {
-      case 0:
-        return (
-          <>
-            <div className="title-bar" 
-              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
-              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
-              <div className="title-bar-text">Important Question</div>
-              <div className="title-bar-controls">
-                <button aria-label="Close" onClick={closeWindow}></button>
-              </div>
-            </div>
-            <div className="window-body">
-              <p>Are you ready for some birthday magic?</p>
-              <div className="button-container">
-                <button onClick={handleYesClick}>Yes</button>
-                <button onClick={handleNoClick}>No</button>
-              </div>
-            </div>
-          </>
-        );
-      case 1:
-        return (
-          <>
-            <div className="title-bar" 
-              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
-              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
-              <div className="title-bar-text">Another Question</div>
-              <div className="title-bar-controls">
-                <button aria-label="Close" onClick={closeWindow}></button>
-              </div>
-            </div>
-            <div className="window-body">
-              <p>Do you love me as much as I love you?</p>
-              <div className="button-container">
-                <button onClick={handleYesClick}>Of course!</button>
-                <button onClick={handleNoClick}>Not yet</button>
-              </div>
-            </div>
-          </>
-        );
-      case 2:
-        return (
-          <>
-            <div className="title-bar" 
-              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
-              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
-              <div className="title-bar-text">Final Question</div>
-              <div className="title-bar-controls">
-                <button aria-label="Close" onClick={closeWindow}></button>
-              </div>
-            </div>
-            <div className="window-body">
-              <p>One more click for your surprise?</p>
-              <div className="button-container">
-                <button onClick={handleYesClick}>Show me!</button>
-                <button onClick={handleNoClick}>Wait</button>
-              </div>
-            </div>
-          </>
-        );
-      case 3:
-        return (
-          <>
-            <div className="title-bar celebration" 
-              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
-              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
-              <div className="title-bar-text">🎂 Happy Birthday! 🎂</div>
-              <div className="title-bar-controls">
-                <button aria-label="Close" onClick={closeWindow}></button>
-              </div>
-            </div>
-            <div className="window-body celebration-body">
-              <h1 className="celebration-text">Happy Birthday Baby!!!</h1>
-              <div className="celebration-message">
-                <p>I wish you a happy birthday! May your life</p>
-                <p>be filled with joy, success, and lots of love! ❤️</p>
-              </div>
-              <div className="button-container">
-                <button onClick={closeWindow}>Close</button>
-              </div>
-            </div>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
+  
   return (
     <div className="App" 
       onClick={handleDocumentClick} 
       onMouseMove={handleMouseMove} 
       onMouseUp={handleMouseUp}
       onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}>
+      onTouchEnd={handleTouchEnd}
+    >
       {shutdownActive ? (
-        <div className="shutdown-screen">
-          <div className="shutdown-text">
-            <p>It's now safe to turn off your computer</p>
-          </div>
-        </div>
+        <ShutdownScreen />
       ) : (
-        <div className={`desktop ${step === 3 ? 'celebration-bg' : 'cute-bg'}`}>
-          {/* Desktop Icons */}
-          <DesktopIcon 
-            icon="my-computer" 
-            label="My Computer" 
-            onClick={handleMyComputerClick}
-            style={{
-              top: '20px',
-              left: '20px'
-            }}
-          />
-          
-          <DesktopIcon 
-            icon="heart" 
-            label="HAPPY BIRTHDAY .EXE" 
-            onClick={handleBirthdayIconClick}
-            style={{
-              top: '120px',
-              left: '20px'
-            }}
-          />
-          
-          <DesktopIcon 
-            icon="heart" 
-            label="SPECIAL MESSAGE .EXE" 
-            onClick={handleSpecialMessageClick}
-            style={{
-              top: '220px',
-              left: '20px'
-            }}
-          />
-          
-          {/* Main dialog window */}
+        <Desktop
+          step={step}
+          isMobile={isMobile}
+          handleMyComputerClick={handleMyComputerClick}
+          handleBirthdayIconClick={handleBirthdayIconClick}
+          handleSpecialMessageClick={handleSpecialMessageClick}
+        >
+          {/* Main birthday dialog window */}
           {showing && (
-            <div 
-              ref={birthdayWindowRef}
-              className={`window birthday-window ${step === 3 ? 'celebration-window' : ''}`}
-              style={{ zIndex: windowZIndex.birthday }}
-            >
-              {renderDialogContent()}
-            </div>
+            <BirthdayWindow
+              step={step}
+              closeWindow={closeBirthdayWindow}
+              handleYesClick={handleYesClick}
+              handleNoClick={handleNoClick}
+              windowRef={birthdayWindowRef}
+              zIndex={windowZIndex.birthday}
+              handleMouseDown={handleMouseDown}
+              handleTouchStart={handleTouchStart}
+              isMobile={isMobile}
+            />
           )}
           
           {/* My Computer Window */}
           {showingMyComputer && (
-            <div 
-              ref={myComputerWindowRef}
-              className="window my-computer-window"
-              style={{ 
-                top: '20%', 
-                left: '30%', 
-                width: '400px', 
-                height: '300px',
-                zIndex: windowZIndex.myComputer 
-              }}
-            >
-              <div className="title-bar" 
-                onMouseDown={(e) => handleMouseDown(e, 'myComputer')}
-                onTouchStart={(e) => handleTouchStart(e, 'myComputer')}>
-                <div className="title-bar-text">My Computer</div>
-                <div className="title-bar-controls">
-                  <button aria-label="Minimize"></button>
-                  <button aria-label="Maximize"></button>
-                  <button aria-label="Close" onClick={closeMyComputerWindow}></button>
-                </div>
-              </div>
-              <div className="window-body my-computer-body">
-                <div className="file-explorer">
-                  <div className="explorer-item">
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNCA0SDI4VjI4SDRWNFpNOCA4VjI0SDI0VjhIOFoiIGZpbGw9IiMwMDAwQTAiLz48L3N2Zz4=" 
-                      alt="Hard Disk" 
-                    />
-                    <div>Local Disk (C:)</div>
-                  </div>
-                  <div className="explorer-item" onClick={handleBirthdayIconClick}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
-                      alt="Birthday" 
-                    />
-                    <div>HAPPY BIRTHDAY .EXE</div>
-                  </div>
-                  
-                  <div className="explorer-item" onClick={handleSpecialMessageClick}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
-                      alt="Special Message" 
-                    />
-                    <div>SPECIAL MESSAGE .EXE</div>
-                  </div>
-                </div>
-                <div className="status-bar">
-                  <div>3 object(s)</div>
-                </div>
-              </div>
-            </div>
+            <MyComputerWindow
+              closeWindow={closeMyComputerWindow}
+              handleBirthdayIconClick={handleBirthdayIconClick}
+              handleSpecialMessageClick={handleSpecialMessageClick}
+              windowRef={myComputerWindowRef}
+              zIndex={windowZIndex.myComputer}
+              handleMouseDown={handleMouseDown}
+              handleTouchStart={handleTouchStart}
+              isMobile={isMobile}
+            />
           )}
           
           {/* Special message window with animated hearts */}
           {showingExtra && (
-            <div 
-              ref={specialWindowRef}
-              className="window special-window"
-              style={{ 
-                top: '30%', 
-                left: '60%', 
-                width: '400px', 
-                height: '300px',
-                zIndex: windowZIndex.special 
-              }}
-            >
-              <div className="title-bar" 
-                onMouseDown={(e) => handleMouseDown(e, 'special')}
-                onTouchStart={(e) => handleTouchStart(e, 'special')}>
-                <div className="title-bar-text">❤️ Special Message</div>
-                <div className="title-bar-controls">
-                  <button aria-label="Close" onClick={closeExtraWindow}></button>
-                </div>
-              </div>
-              <div className="window-body special-message-body">
-                <h2 className="love-text">I Love You!</h2>
-                <p className="love-subtext">I hope you like this cute little birthday website I made for you! 💖</p>
-                
-                {/* Animated hearts container */}
-                <div className="hearts-container">
-                  {[...Array(15)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className="floating-heart" 
-                      style={{
-                        left: `${Math.random() * 100}%`,
-                        animationDuration: `${3 + Math.random() * 7}s`,
-                        animationDelay: `${Math.random() * 5}s`,
-                        fontSize: `${12 + Math.random() * 20}px`
-                      }}
-                    >
-                      ❤️
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <SpecialMessageWindow
+              closeWindow={closeExtraWindow}
+              windowRef={specialWindowRef}
+              zIndex={windowZIndex.special}
+              handleMouseDown={handleMouseDown}
+              handleTouchStart={handleTouchStart}
+              isMobile={isMobile}
+            />
           )}
           
           {/* Confetti */}
-          {step === 3 && (
-            <div className="confetti">
-              {[...Array(50)].map((_, i) => (
-                <div 
-                  key={i} 
-                  className="confetti-piece" 
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    backgroundColor: ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FF1493', '#DB7093'][Math.floor(Math.random() * 5)]
-                  }}
-                />
-              ))}
-            </div>
-          )}
+          {step === 3 && <Confetti isMobile={isMobile} />}
           
-          {/* Windows 95 Taskbar */}
-          <div className="taskbar">
-            <div className="start-button" onClick={toggleStartMenu}>
-              <img 
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRkZGRkYiIC8+PC9zdmc+" 
-                alt="Heart logo" 
-              />
-              <span>Start</span>
-            </div>
-            
-            {/* Start Menu */}
-            {startMenuOpen && (
-              <div className="start-menu">
-                <div className="start-menu-sidebar">
-                  <span>HappyBirthday<span className="win95">OS</span></span>
-                </div>
-                <div className="start-menu-items">
-                  <div className="menu-item" onClick={() => {setShowingExtra(true); setStartMenuOpen(false);}}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
-                      alt="Special Message" 
-                    />
-                    <span>Special Message</span>
-                  </div>
-                  <div className="menu-item" onClick={() => {setShowing(true); setStartMenuOpen(false);}}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNmZjY5YjQiIC8+PC9zdmc+" 
-                      alt="Birthday" 
-                    />
-                    <span>Birthday Greeting</span>
-                  </div>
-                  <div className="menu-item" onClick={() => {setShowingMyComputer(true); setStartMenuOpen(false);}}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMiAySDUuNVY2SDJWMlpNNi41IDJIMTBWN0g2LjVWMlpNMiA3SDUuNVYxMUgyVjdaTTYuNSA4SDEwVjE0SDYuNVY4Wk0xMSAyVjE0SDE0VjJIMTFaIiBmaWxsPSIjMDAwMEEwIi8+PC9zdmc+" 
-                      alt="My Computer" 
-                    />
-                    <span>My Computer</span>
-                  </div>
-                  <div className="separator"></div>
-                  <div className="menu-item" onClick={handleShutdown}>
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMiAyTDE0IDJMMTQgMTRMMiAxNFoiIHN0cm9rZT0iIzAwMCIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00IDhIMTIiIHN0cm9rZT0iIzAwMCIvPjxwYXRoIGQ9Ik04IDEyVjQiIHN0cm9rZT0iIzAwMCIvPjwvc3ZnPg==" 
-                      alt="Exit" 
-                    />
-                    <span>Shut Down...</span>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            <div className="taskbar-time">{currentTime}</div>
-          </div>
-        </div>
+          {/* Start Menu */}
+          <StartMenu
+            isOpen={startMenuOpen}
+            openMyComputer={handleMyComputerClick}
+            openBirthdayWindow={handleBirthdayIconClick}
+            openSpecialMessage={handleSpecialMessageClick}
+            handleShutdown={handleShutdown}
+            closeStartMenu={closeStartMenu}
+          />
+          
+          {/* Taskbar */}
+          <Taskbar
+            toggleStartMenu={toggleStartMenu}
+            startMenuOpen={startMenuOpen}
+            currentTime={currentTime}
+            openWindows={openWindows}
+            activeWindow={activeWindow}
+            setActiveWindow={setActiveWindow}
+            bringWindowToFront={bringWindowToFront}
+          />
+        </Desktop>
       )}
     </div>
   );

@@ -201,6 +201,51 @@ button {
   z-index: 1000;
 }
 
+.taskbar-buttons {
+  display: flex;
+  flex: 1;
+  height: 22px;
+  margin-left: 5px;
+  overflow: hidden;
+}
+
+.taskbar-button {
+  display: flex;
+  align-items: center;
+  min-width: 120px;
+  max-width: 200px;
+  height: 22px;
+  margin-right: 3px;
+  padding: 2px 8px;
+  background-color: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+}
+
+.taskbar-button:hover {
+  background-color: #d1d1d1;
+}
+
+.taskbar-button.active {
+  background-color: #d1d1d1;
+  box-shadow: inset 1px 1px #0a0a0a, inset -1px -1px #ffffff, inset 2px 2px #808080, inset -2px -2px #dfdfdf;
+}
+
+.taskbar-button img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.taskbar-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .start-button {
   display: flex;
   align-items: center;
@@ -427,5 +472,20 @@ button {
     top: -10%;
     transform: translateX(30px) rotate(360deg) scale(0.5);
     opacity: 0;
+  }
+}
+
+/* Simple mobile responsive adjustments */
+@media screen and (max-width: 768px) {
+  .taskbar-button {
+    min-width: 80px !important;
+    max-width: 120px !important;
+    font-size: 10px !important;
+  }
+  
+  .taskbar-button img {
+    width: 14px !important;
+    height: 14px !important;
+    margin-right: 2px !important;
   }
 }
