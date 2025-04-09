@@ -1,38 +1,214 @@
+/* Windows 95 Birthday Theme */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.desktop {
+  width: 100%;
+  height: 100%;
+  background-color: #008080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: background-color 1s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.celebration-bg {
+  background-color: #ff69b4;
+  background-image: radial-gradient(circle, #ff69b4, #ff1493);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.window {
+  width: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+}
+
+.celebration-window {
+  width: 450px;
+}
+
+.window-body {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+button {
+  min-width: 80px;
+  cursor: pointer;
+}
+
+.celebration {
+  background: linear-gradient(to right, #ff69b4, #ff1493);
+}
+
+.celebration-body {
+  background-color: #ffffee;
+  padding: 20px;
+}
+
+.celebration-text {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #ff1493;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  animation: pulse 1.5s infinite;
+}
+
+.celebration-message {
+  font-size: 16px;
+  margin: 15px 0;
+  line-height: 1.4;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Confetti Animation */
+.confetti {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 20px;
+  top: -20px;
+  animation: confetti-fall 5s linear infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    top: -20px;
+    transform: rotate(0deg) translateX(0);
+  }
+  100% {
+    top: 100vh;
+    transform: rotate(720deg) translateX(100px);
+  }
+}
+
+/* Desktop Icons */
+.desktop-icon {
+  position: absolute;
+  width: 70px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1;
+}
+
+.desktop-icon:hover {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+.desktop-icon:active {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+.desktop-icon-img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 5px;
+}
+
+.desktop-icon-text {
+  font-size: 12px;
   color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  word-break: break-word;
 }
 
-.App-link {
-  color: #61dafb;
+/* Taskbar */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  background-color: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.start-button {
+  display: flex;
+  align-items: center;
+  padding: 2px 6px;
+  margin: 0 2px;
+  height: 22px;
+  background-color: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  cursor: pointer;
+}
+
+.start-button:active {
+  box-shadow: inset -1px -1px #ffffff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+}
+
+.start-button img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.taskbar-time {
+  position: absolute;
+  right: 5px;
+  background-color: #c0c0c0;
+  border: 1px solid #808080;
+  border-style: inset;
+  padding: 2px 6px;
+  font-size: 11px;
 }

@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Happy Birthday Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A cute Windows 95-themed birthday website with interactive prompts and a celebration animation.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Authentic Windows 95 aesthetic using 98.css
+- Interactive dialog windows that ask questions
+- "No" button that moves randomly around the screen when clicked
+- Desktop icons you can click after the celebration
+- Windows 95 taskbar with working clock
+- Confetti animation when celebration screen appears
+- Responsive design
 
-### `npm start`
+## How to Use
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Simply open the website and you'll see a Windows 95-style dialog box asking if you want the best birthday ever.
+2. Click "Yes" to proceed through a series of prompts.
+3. Try clicking "No" to see what happens!
+4. After the third prompt, you'll see a celebration screen with confetti.
+5. Click the desktop icons for additional fun interactions.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Deployment
 
-### `npm test`
+To deploy this website for your girlfriend's birthday:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Build the project with `npm run build`
+2. Deploy the contents of the `build` folder to any static hosting service like:
+   - GitHub Pages
+   - Netlify
+   - Vercel
+   - Amazon S3
 
-### `npm run build`
+## Development
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project was created with Create React App using TypeScript.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To run the development server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm start
+```
 
-### `npm run eject`
+To build for production:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm run build
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Customization
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Edit the messages in the dialog boxes in `App.tsx` within the `renderDialogContent` function
+- Change colors in `App.css`
+- Add more desktop icons or customize the existing ones
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Credits
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Made with ❤️ for a special birthday
+- Uses [98.css](https://github.com/jdan/98.css) for Windows 95 styling
