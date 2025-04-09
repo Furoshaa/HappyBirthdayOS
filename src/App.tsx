@@ -237,12 +237,148 @@ function App() {
     };
   }, [isDragging, activeWindow, dragOffset]);
 
+  // Add touchStart handler for mobile drag
+  const handleTouchStart = (e: React.TouchEvent, windowName: string) => {
+    // Only allow dragging from the title bar (not from buttons)
+    if (!(e.target as HTMLElement).closest('.title-bar-controls')) {
+      setIsDragging(true);
+      setActiveWindow(windowName);
+      
+      // Update z-index to bring window to front
+      setWindowZIndex(prev => ({
+        ...prev,
+        [windowName]: Math.max(prev.birthday, prev.myComputer, prev.special) + 1
+      }));
+      
+      let windowElement: HTMLDivElement | null = null;
+      
+      switch (windowName) {
+        case 'birthday':
+          windowElement = birthdayWindowRef.current;
+          break;
+        case 'myComputer':
+          windowElement = myComputerWindowRef.current;
+          break;
+        case 'special':
+          windowElement = specialWindowRef.current;
+          break;
+      }
+      
+      if (windowElement && e.touches[0]) {
+        const rect = windowElement.getBoundingClientRect();
+        setDragOffset({
+          x: e.touches[0].clientX - rect.left,
+          y: e.touches[0].clientY - rect.top
+        });
+        
+        // Add dragging class
+        windowElement.classList.add('dragging');
+      }
+      
+      e.preventDefault();
+    }
+  };
+
+  // Handle touch move for mobile dragging
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isDragging && activeWindow && e.touches[0]) {
+      let windowElement: HTMLDivElement | null = null;
+      
+      switch (activeWindow) {
+        case 'birthday':
+          windowElement = birthdayWindowRef.current;
+          break;
+        case 'myComputer':
+          windowElement = myComputerWindowRef.current;
+          break;
+        case 'special':
+          windowElement = specialWindowRef.current;
+          break;
+      }
+      
+      if (windowElement) {
+        windowElement.style.left = `${e.touches[0].clientX - dragOffset.x}px`;
+        windowElement.style.top = `${e.touches[0].clientY - dragOffset.y}px`;
+        windowElement.style.transform = 'none'; // Remove default centering
+      }
+    }
+  };
+
+  // Handle touch end to stop mobile dragging
+  const handleTouchEnd = () => {
+    if (isDragging && activeWindow) {
+      let windowElement: HTMLDivElement | null = null;
+      
+      switch (activeWindow) {
+        case 'birthday':
+          windowElement = birthdayWindowRef.current;
+          break;
+        case 'myComputer':
+          windowElement = myComputerWindowRef.current;
+          break;
+        case 'special':
+          windowElement = specialWindowRef.current;
+          break;
+      }
+      
+      if (windowElement) {
+        // Remove dragging class
+        windowElement.classList.remove('dragging');
+      }
+    }
+    
+    setIsDragging(false);
+    setActiveWindow(null);
+  };
+
+  // Add touch event listeners
+  useEffect(() => {
+    const handleGlobalTouchMove = (e: TouchEvent) => {
+      if (isDragging && activeWindow && e.touches[0]) {
+        let windowElement: HTMLDivElement | null = null;
+        
+        switch (activeWindow) {
+          case 'birthday':
+            windowElement = birthdayWindowRef.current;
+            break;
+          case 'myComputer':
+            windowElement = myComputerWindowRef.current;
+            break;
+          case 'special':
+            windowElement = specialWindowRef.current;
+            break;
+        }
+        
+        if (windowElement) {
+          windowElement.style.left = `${e.touches[0].clientX - dragOffset.x}px`;
+          windowElement.style.top = `${e.touches[0].clientY - dragOffset.y}px`;
+          windowElement.style.transform = 'none'; // Remove default centering
+        }
+      }
+    };
+    
+    const handleGlobalTouchEnd = () => {
+      setIsDragging(false);
+      setActiveWindow(null);
+    };
+    
+    document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
+    document.addEventListener('touchend', handleGlobalTouchEnd);
+    
+    return () => {
+      document.removeEventListener('touchmove', handleGlobalTouchMove);
+      document.removeEventListener('touchend', handleGlobalTouchEnd);
+    };
+  }, [isDragging, activeWindow, dragOffset]);
+
   const renderDialogContent = () => {
     switch (step) {
       case 0:
         return (
           <>
-            <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
+            <div className="title-bar" 
+              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
+              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
               <div className="title-bar-text">Important Question</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -260,7 +396,9 @@ function App() {
       case 1:
         return (
           <>
-            <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
+            <div className="title-bar" 
+              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
+              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
               <div className="title-bar-text">Another Question</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -278,7 +416,9 @@ function App() {
       case 2:
         return (
           <>
-            <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
+            <div className="title-bar" 
+              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
+              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
               <div className="title-bar-text">Final Question</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -296,7 +436,9 @@ function App() {
       case 3:
         return (
           <>
-            <div className="title-bar celebration" onMouseDown={(e) => handleMouseDown(e, 'birthday')}>
+            <div className="title-bar celebration" 
+              onMouseDown={(e) => handleMouseDown(e, 'birthday')}
+              onTouchStart={(e) => handleTouchStart(e, 'birthday')}>
               <div className="title-bar-text">🎂 Happy Birthday! 🎂</div>
               <div className="title-bar-controls">
                 <button aria-label="Close" onClick={closeWindow}></button>
@@ -320,7 +462,12 @@ function App() {
   };
 
   return (
-    <div className="App" onClick={handleDocumentClick} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+    <div className="App" 
+      onClick={handleDocumentClick} 
+      onMouseMove={handleMouseMove} 
+      onMouseUp={handleMouseUp}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}>
       {shutdownActive ? (
         <div className="shutdown-screen">
           <div className="shutdown-text">
@@ -384,7 +531,9 @@ function App() {
                 zIndex: windowZIndex.myComputer 
               }}
             >
-              <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'myComputer')}>
+              <div className="title-bar" 
+                onMouseDown={(e) => handleMouseDown(e, 'myComputer')}
+                onTouchStart={(e) => handleTouchStart(e, 'myComputer')}>
                 <div className="title-bar-text">My Computer</div>
                 <div className="title-bar-controls">
                   <button aria-label="Minimize"></button>
@@ -437,7 +586,9 @@ function App() {
                 zIndex: windowZIndex.special 
               }}
             >
-              <div className="title-bar" onMouseDown={(e) => handleMouseDown(e, 'special')}>
+              <div className="title-bar" 
+                onMouseDown={(e) => handleMouseDown(e, 'special')}
+                onTouchStart={(e) => handleTouchStart(e, 'special')}>
                 <div className="title-bar-text">❤️ Special Message</div>
                 <div className="title-bar-controls">
                   <button aria-label="Close" onClick={closeExtraWindow}></button>
