@@ -21,8 +21,8 @@ body {
 .desktop {
   width: 100%;
   height: 100%;
-  background-color: #e8d8e0;
-  background-image: radial-gradient(circle, #e8d8e0, #d8c8d0);
+  background-color: #4b4648;
+  background-image: radial-gradient(circle, #4e3640, #8a6077);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,7 @@ body {
 
 .celebration-bg {
   background-color: #ff69b4;
-  background-image: radial-gradient(circle, #ff1493, #e8d8e0);
+  background-image: radial-gradient(circle, #ff1493, #8a6077);
 }
 
 .window {
@@ -71,6 +71,13 @@ body {
   align-items: center;
 }
 
+.window-body p {
+  font-size: 20px;
+  margin: 15px 0;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
 .button-container {
   display: flex;
   justify-content: space-around;
@@ -81,6 +88,11 @@ body {
 button {
   min-width: 80px;
   cursor: pointer;
+  font-size: 22px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .celebration {
