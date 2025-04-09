@@ -38,8 +38,8 @@ const Taskbar: React.FC<TaskbarProps> = ({
         onClick={toggleStartMenu}
       >
         <img 
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSAxSDggVjhIMSBaIiBmaWxsPSIjMDAwMEFBIi8+PHBhdGggZD0iTTkgMUgxNiBWOEg5IFoiIGZpbGw9IiNmZjBmMDAiLz48cGF0aCBkPSJNMSA5SDggVjE2SDEgWiIgZmlsbD0iIzAwY2YwMCIvPjxwYXRoIGQ9Ik05IDlIMTYgVjE2SDkgWiIgZmlsbD0iI2ZmY2YwMCIvPjwvc3ZnPg==" 
-          alt="Start" 
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRkZGRkYiIC8+PC9zdmc+" 
+          alt="Heart logo" 
         />
         <span>Start</span>
       </div>
@@ -91,8 +91,8 @@ const Taskbar: React.FC<TaskbarProps> = ({
             onClick={() => handleTaskbarButtonClick('ooiiaa')}
           >
             <img 
-              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCwxNCBMMiw4IEMwLjUsNi41IDAuNSw0IDIsMi41IEMzLjUsMSA2LDEgOCw0IEMxMCwxIDEyLjUsMSAxNCwyLjUgQzE1LjUsNCAxNS41LDYuNSAxNCw4IEw4LDE0IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
-              alt="OOIIAA" 
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIyIiB5PSIzLjUiIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiBmaWxsPSIjNDE2OUUxIi8+PHJlY3QgeD0iMyIgeT0iNC41IiB3aWR0aD0iMTAiIGhlaWdodD0iNyIgZmlsbD0iIzAwMDAwMCIvPjxwb2x5Z29uIHBvaW50cz0iNiw2IDEwLDggNiwxMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPg==" 
+              alt="Video" 
             />
             <span>ooiiaa.mp4</span>
           </div>

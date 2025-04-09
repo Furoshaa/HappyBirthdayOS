@@ -76,7 +76,7 @@ const MyComputerWindow: React.FC<MyComputerWindowProps> = ({
           </div>
           <div className="explorer-item" onClick={handleOOIIAAClick}>
             <img 
-              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTYsMjggTDQsMTYgQzEsMTMgMSw4IDQsNSBDNywyIDEyLDIgMTYsOCBDMjAsMiAyNSwyIDI4LDUgQzMxLDggMzEsMTMgMjgsMTYgTDE2LDI4IFoiIGZpbGw9IiNGRjE0OTMiIC8+PC9zdmc+" 
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI0IiB5PSI3IiB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIGZpbGw9IiM0MTY5RTEiLz48cmVjdCB4PSI2IiB5PSI5IiB3aWR0aD0iMjAiIGhlaWdodD0iMTQiIGZpbGw9IiMwMDAwMDAiLz48cG9seWdvbiBwb2ludHM9IjEyLDEyIDIwLDE2IDEyLDIwIiBmaWxsPSIjRkZGRkZGIi8+PC9zdmc+" 
               alt="OOIIAA Video" 
             />
             <div>ooiiaa.mp4</div>

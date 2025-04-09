@@ -31,6 +31,13 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ icon, label, onClick, style }
                   fill="#FF1493" />
           </svg>
         )}
+        {icon === 'video' && (
+          <svg width="32" height="32" viewBox="0 0 32 32">
+            <rect x="4" y="7" width="24" height="18" fill="#4169E1" />
+            <rect x="6" y="9" width="20" height="14" fill="#000000" />
+            <polygon points="12,12 20,16 12,20" fill="#FFFFFF" />
+          </svg>
+        )}
       </div>
       <div className="desktop-icon-text">{label}</div>
     </div>

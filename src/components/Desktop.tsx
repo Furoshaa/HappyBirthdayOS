@@ -51,7 +51,7 @@ const Desktop: React.FC<DesktopProps> = ({
         style={{ top: isMobile ? '190px' : '220px', left: isMobile ? '10px' : '20px' }}
       />
       <DesktopIcon 
-        icon="heart" 
+        icon="video" 
         label="ooiiaa.mp4" 
         onClick={handleOOIIAAClick} 
         style={{ top: isMobile ? '280px' : '320px', left: isMobile ? '10px' : '20px' }}
