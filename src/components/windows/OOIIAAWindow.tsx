@@ -60,6 +60,7 @@ const OOIIAAWindow: React.FC<OOIIAAWindowProps> = ({
           ref={videoRef}
           controls
           autoPlay
+          playsInline
           width="100%"
           className="ooiiaa-video"
         >
